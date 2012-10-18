@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<string-array name="list_scale_array">
+    <item>Original size</item>
+    <item>Scale to width</item>
+    <item>Fullscreen</item>
+</string-array>
+<string-array name="list_scale_values">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+</string-array>
+
+</resources>

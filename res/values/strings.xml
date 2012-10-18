@@ -1,8 +1,18 @@
 <resources>
 
-    <string name="app_name">NappingPlayer</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="app_name">Napping Player</string>
+    <string name="title_activity_start">Welcome to Napping Player!</string>
+    <string name="title_activity_preferences">Preferences</string>
 
+    <!-- Start Activity -->
+    <string name="hello_world">Welcome to Napping Player!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="start">Start Napping!</string>
+    <string name="enter_name">What\'s your name?</string>
+
+    <!-- Napping Activity -->
+
+	<!-- Prefs -->
+	<string name="list_scale_title">Display mode</string>
+	<string name="list_scale_summary">How should the video be displayed?</string>
 </resources>

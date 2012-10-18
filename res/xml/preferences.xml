@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/list_scale_array"
+        android:entryValues="@array/list_scale_values"
+        android:key="list_scale"
+        android:title="@string/list_scale_title" 
+        
+        android:summary="@string/list_scale_summary"/>
+
+</PreferenceScreen>
