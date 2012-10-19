@@ -28,8 +28,7 @@ public class ViewActivity extends Activity implements Callback,
 OnCompletionListener, OnPreparedListener, OnVideoSizeChangedListener,
 OnErrorListener{
 	
-	private static final String TAG = ViewActivity.class
-	.getSimpleName();
+	private static final String TAG = ViewActivity.class.getSimpleName();
 	
 	private MediaPlayer mPlayer;
 	TextView videoIDview;
@@ -122,10 +121,19 @@ OnErrorListener{
 
 	@Override
 	public void onCompletion(MediaPlayer player) {
-		// TODO Auto-generated method stub
+		Log.d(TAG, "Finished playing video");
 		mPlayer.release();
 		finish();
 	}
+
+	//Starts video after showing Video ID
+	public void delayedStartVideo(){
+		videoIDview.bringToFront();
+		SystemClock.sleep(2000);
+		videoIDview.setVisibility(View.INVISIBLE);
+		mPlayer.start();
+	}
+
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -141,11 +149,12 @@ OnErrorListener{
 			mPlayer = new MediaPlayer();
 			
 			//resolve video ID
-			fileName = Configuration.videos[videoID].getName();
-			File videoFile = new File(Configuration.sFolderVideos, fileName);
+			File videoFile = VideoPlaylist.getVideo(videoID);
 			if ((!videoFile.exists()) || (!videoFile.canRead())) {
-				throw new IOException("Video file " + fileName + "not found!");
+				throw new IOException("Video file " + videoFile.toString() + "not found!");
 			}
+			
+			Log.d(TAG, "Preparing player for video " + videoFile.toString());
 			
 			mPlayer.setDataSource(videoFile.getPath());
 			mPlayer.setDisplay(mHolder);
@@ -168,11 +177,11 @@ OnErrorListener{
 		    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		    String displaySetting = prefs.getString("list_scale", "");
 		    
-		    if (displaySetting.equalsIgnoreCase("1")) {
+		    if (displaySetting.equalsIgnoreCase("original")) {
 		    	// original size
 			    lp.width = videoWidth;
 			    lp.height = videoHeight;
-		    } else if (displaySetting.equalsIgnoreCase("2")) {
+		    } else if (displaySetting.equalsIgnoreCase("scale")) {
 		    	// scale to screen width
 				// http://stackoverflow.com/q/4835060
 			    // Get the width of the screen
@@ -208,14 +217,5 @@ OnErrorListener{
 	public void surfaceDestroyed(SurfaceHolder arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	
-	//Starts video after showing Video ID
-	public void delayedStartVideo(){
-		videoIDview.bringToFront();
-		SystemClock.sleep(2000);
-		videoIDview.setVisibility(View.INVISIBLE);
-		mPlayer.start();
 	}
 }

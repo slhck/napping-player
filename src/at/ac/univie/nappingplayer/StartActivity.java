@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class StartActivity extends Activity {
 
@@ -17,7 +18,9 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
         
         try {
+        	// initialize SD card
 			Configuration.initialize();
+			VideoPlaylist.initialize(Configuration.videos);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -30,6 +33,14 @@ public class StartActivity extends Activity {
     	Intent startNapping = new Intent(this, NappingActivity.class);
     	EditText name = (EditText) findViewById(R.id.et_person_name);
     	startNapping.putExtra("username", name.getText());
+    	
+    	if (name.getText().toString().equals("")) {
+    		Toast.makeText(this, "You need to enter a name!", Toast.LENGTH_SHORT).show();
+    		name.requestFocus();
+    		// TODO disable this again
+    		// return;
+    	}
+    	
     	startActivity(startNapping);
     }
     

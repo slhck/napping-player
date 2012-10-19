@@ -4,12 +4,13 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/button_play_test"
+        android:id="@+id/button_play_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="playTest"
-        android:text="Play Test Video" />
+        android:textColor="#ffffff"
+        android:text="Play Next Video" />
 
+   	
 </RelativeLayout>
