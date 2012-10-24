@@ -29,13 +29,14 @@ OnCompletionListener, OnPreparedListener, OnVideoSizeChangedListener,
 OnErrorListener{
 	
 	private static final String TAG = ViewActivity.class.getSimpleName();
+	private static final int VIDEO_START_DELAY = 1000;
 	
 	private MediaPlayer mPlayer;
 	TextView videoIDview;
 	private SurfaceView mPlayView;
 	private SurfaceHolder mHolder;
 	private String fileName;
-	int videoID;
+	int mVideoId;
 	int pauseduration;
 	
 	
@@ -49,15 +50,16 @@ OnErrorListener{
         
         //catch Intent
         Intent intent= getIntent(); // gets the previously created intent
-        videoID = intent.getIntExtra("videoID", -1);
+        mVideoId = intent.getIntExtra("videoId", -1);
         
-        if (videoID == -1) {
+        if (mVideoId == -1) {
         	Log.e(TAG, "No video ID passed, exiting");
+    		setResult(Activity.RESULT_CANCELED);
         	finish();
         }
         
         videoIDview = (TextView) this.findViewById(R.id.text);
-        videoIDview.setText("Video " + String.valueOf(videoID+1));
+        videoIDview.setText("Video " + String.valueOf(mVideoId+1));
         
         
         try {
@@ -123,13 +125,16 @@ OnErrorListener{
 	public void onCompletion(MediaPlayer player) {
 		Log.d(TAG, "Finished playing video");
 		mPlayer.release();
+		Intent resultData = new Intent();
+		resultData.putExtra("videoId", mVideoId);
+		setResult(Activity.RESULT_OK, resultData);
 		finish();
 	}
 
 	//Starts video after showing Video ID
 	public void delayedStartVideo(){
 		videoIDview.bringToFront();
-		SystemClock.sleep(2000);
+		SystemClock.sleep(VIDEO_START_DELAY);
 		videoIDview.setVisibility(View.INVISIBLE);
 		mPlayer.start();
 	}
@@ -149,7 +154,7 @@ OnErrorListener{
 			mPlayer = new MediaPlayer();
 			
 			//resolve video ID
-			File videoFile = VideoPlaylist.getVideo(videoID);
+			File videoFile = VideoPlaylist.getVideo(mVideoId);
 			if ((!videoFile.exists()) || (!videoFile.canRead())) {
 				throw new IOException("Video file " + videoFile.toString() + "not found!");
 			}
