@@ -5,13 +5,18 @@
     <string name="title_activity_preferences">Preferences</string>
 
     <!-- Start Activity -->
-    <string name="hello_world">Welcome to Napping Player!</string>
+    <string name="welcome">Welcome to Napping Player!</string>
     <string name="menu_settings">Settings</string>
     <string name="start">Start Napping!</string>
     <string name="enter_name">What\'s your name?</string>
 
     <!-- Napping Activity -->
-
+    <string name="play_next_video">Play Next Video!</string>
+    <string name="click_play_to_start">Click \'Play Next Video\' to start!</string>
+    <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' once you\'re done!</string>
+	<string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
+	<string name="finish">Finish!</string>
+	
 	<!-- Prefs -->
 	<string name="list_scale_title">Display mode</string>
 	<string name="list_scale_summary">How should the video be displayed?</string>

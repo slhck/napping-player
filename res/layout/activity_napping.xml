@@ -9,9 +9,27 @@
         android:id="@+id/button_play_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="#ffffff"
-        android:text="Play Next Video" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/play_next_video"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/finish"
+        android:visibility="gone"
+        android:textColor="#ffffff" />
+    
+    <TextView
+        android:id="@+id/tv_info_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="" />
 	
 </RelativeLayout>

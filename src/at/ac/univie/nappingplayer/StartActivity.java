@@ -32,7 +32,7 @@ public class StartActivity extends Activity {
     public void startNapping(View view) {
     	Intent startNapping = new Intent(this, NappingActivity.class);
     	EditText name = (EditText) findViewById(R.id.et_person_name);
-    	startNapping.putExtra("username", name.getText());
+    	startNapping.putExtra("userName", name.getText().toString());
     	
     	if (name.getText().toString().equals("")) {
     		Toast.makeText(this, "You need to enter a name!", Toast.LENGTH_SHORT).show();
