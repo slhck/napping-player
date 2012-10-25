@@ -3,6 +3,8 @@ package at.ac.univie.nappingplayer;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,9 @@ public class NappingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_napping);
 		
+		View v = findViewById(R.id.layout_napping);
+        v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
+		
 		Intent intent = getIntent();
 		mName = intent.getStringExtra("userName");
 		
@@ -48,8 +53,6 @@ public class NappingActivity extends Activity {
 		mInfoText = (TextView) findViewById(R.id.tv_info_message);
 		
 		mVideoButtons = new ArrayList<VideoButtonView>();
-		
-		showMessage(getText(R.string.click_play_to_start));
 		
 		Log.d(TAG, "Files to play: " + VideoPlaylist.sFiles.toString());
 	}
@@ -76,7 +79,11 @@ public class NappingActivity extends Activity {
 		// if we haven't stopped yet just get the current video ID (could be 0
 		// to start)
 		if (VideoPlaylist.getState() != VideoPlaylist.STATE_FINISHED) {
-			showMessage(getText(R.string.drag_around));
+			if (VideoPlaylist.getState() != VideoPlaylist.STATE_INITIALIZED) {
+				showMessage(getText(R.string.drag_around));				
+			} else {
+				showMessage(getText(R.string.click_play_to_start));
+			}
 			mCurrentVideoId = VideoPlaylist.getCurrentVideoId();
 			Log.d(TAG, "Setting current video ID to " + mCurrentVideoId);
 		} else {
@@ -155,6 +162,20 @@ public class NappingActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setTitle(getText(R.string.dialog_close_header))
+        .setMessage(getText(R.string.dialog_close_body))
+        .setPositiveButton(getText(R.string.yes), new DialogInterface.OnClickListener()
+        	{
+        		@Override
+    			public void onClick(DialogInterface dialog, int which) {
+    				finish();    
+    			}
+
+        	})
+        .setNegativeButton(getText(R.string.no), null)
+        .show();
 	}
 
 	private void showMessage(CharSequence charSequence) {

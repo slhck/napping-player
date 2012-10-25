@@ -44,8 +44,11 @@ OnErrorListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	
         setContentView(R.layout.showvideo);
+        
+        View v = findViewById(R.id.layout_video);
+        v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
+        
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
         //catch Intent

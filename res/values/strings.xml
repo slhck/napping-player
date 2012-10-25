@@ -4,6 +4,9 @@
     <string name="title_activity_start">Welcome to Napping Player!</string>
     <string name="title_activity_preferences">Preferences</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    
     <!-- Start Activity -->
     <string name="welcome">Welcome to Napping Player!</string>
     <string name="menu_settings">Settings</string>
@@ -16,6 +19,8 @@
     <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' once you\'re done!</string>
 	<string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
 	<string name="finish">Finish!</string>
+	<string name="dialog_close_header">Exit?</string>
+	<string name="dialog_close_body">Do you really want to quit the experiment?</string>
 	
 	<!-- Prefs -->
 	<string name="list_scale_title">Display mode</string>

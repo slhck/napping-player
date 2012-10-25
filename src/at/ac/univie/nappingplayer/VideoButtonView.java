@@ -76,9 +76,10 @@ public class VideoButtonView extends android.widget.Button {
 							vibrator.vibrate(VIBRATE_DURATION);
 							dragStarted = true;
 						} else {
+							// http://stackoverflow.com/a/10075146
 							MarginLayoutParams marginParams = new MarginLayoutParams(v.getLayoutParams());
 							int left = (int) event.getRawX() - (v.getWidth() / 2);
-							int top = (int) event.getRawY() - (v.getHeight());
+							int top  = (int) event.getRawY() - (v.getHeight());
 							marginParams.setMargins(left, top, 0, 0);
 							RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
 							v.setLayoutParams(layoutParams);
@@ -115,7 +116,7 @@ public class VideoButtonView extends android.widget.Button {
 		
 		Log.d(TAG, "Logging results for user " + name);
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmm");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
 		String date = dateFormat.format(new Date());
 		String logName = date + "-" + name;
 		File logFile = new File(Configuration.sFolderLogs, logName);

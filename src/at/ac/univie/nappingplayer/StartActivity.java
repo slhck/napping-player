@@ -16,7 +16,8 @@ public class StartActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        
+        View v = findViewById(R.id.layout_start);
+        v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
         try {
         	// initialize SD card
 			Configuration.initialize();
