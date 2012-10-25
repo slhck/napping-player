@@ -116,7 +116,7 @@ public class NappingActivity extends Activity {
 	private OnClickListener mButtonFinishListener = new OnClickListener() {
 		public void onClick(View v) {
 			// export positions from the current view
-			VideoButtonView.exportPositions(mVideoButtons, mName);
+			IOUtil.exportPositions(mVideoButtons, mName);
 			finish();
 		}
 	};
