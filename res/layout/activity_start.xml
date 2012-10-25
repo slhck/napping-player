@@ -1,9 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
     android:id="@+id/layout_start"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,9 +21,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="95dp"
-        android:textColor="#ffffff"
         android:onClick="startNapping"
-        android:text="@string/start" />
+        android:text="@string/start"
+        android:textColor="#ffffff" />
 
     <EditText
         android:id="@+id/et_person_name"
@@ -44,5 +43,14 @@
         android:layout_above="@+id/et_person_name"
         android:layout_centerHorizontal="true"
         android:text="@string/enter_name" />
+
+    <Button
+        android:id="@+id/button_preferences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/title_activity_preferences"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

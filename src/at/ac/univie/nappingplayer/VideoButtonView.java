@@ -23,8 +23,7 @@ import android.widget.RelativeLayout;
 public class VideoButtonView extends android.widget.Button {
 	private static final String TAG = VideoButtonView.class.getSimpleName();
 	
-	private static final int SINGLE_VIDEO_PLAY_REQUEST = 1;
-	private static final int VIBRATE_DURATION = 100;
+	private static final int VIBRATE_DURATION = 50;
 	
 	String mLabel;
 	int mVideoId;
@@ -58,7 +57,6 @@ public class VideoButtonView extends android.widget.Button {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				boolean handled = false;
 				int action = event.getAction();
 				switch (action) {
 				case MotionEvent.ACTION_DOWN:

@@ -25,4 +25,7 @@
 	<!-- Prefs -->
 	<string name="list_scale_title">Display mode</string>
 	<string name="list_scale_summary">How should the video be displayed?</string>
+	<string name="video_start_title">Video start delay</string>
+	<string name="video_start_summary">How long in milliseconds the video title is shown?</string>
+	
 </resources>

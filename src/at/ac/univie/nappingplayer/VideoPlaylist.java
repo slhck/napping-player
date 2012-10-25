@@ -16,6 +16,7 @@ public abstract class VideoPlaylist {
 	private static final String TAG = VideoPlaylist.class.getSimpleName();
 	
 	static ArrayList<File> 	sFiles;
+	static ArrayList<Integer>   sPlayedIds;
 	private static int 		sCurrentVideo;
 	private static int 		sState;
 	
@@ -23,8 +24,13 @@ public abstract class VideoPlaylist {
 	public static final int STATE_PLAYING 		= 2;
 	public static final int STATE_FINISHED 		= 3;
 	
+	// order fields, TODO
+	public static final int ORDER_SEQUENTIAL 	= 1;
+	public static final int ORDER_RANDOM 		= 2;
+	
 	public static void initialize(File[] files) {
 		sFiles = new ArrayList<File>(Arrays.asList(files));
+		sPlayedIds = new ArrayList<Integer>();
 		sCurrentVideo = 0;
 		sState = STATE_INITIALIZED;
 	}
@@ -36,6 +42,10 @@ public abstract class VideoPlaylist {
 		return sFiles.get(id);
 	}
 	
+	/**
+	 * Confirms if the playlist has a next video to play
+	 * @return
+	 */
 	public static boolean hasNext() {
 		Log.d(TAG, "Has next? Current video id: " + sCurrentVideo + ", size: " + sFiles.size());
 		if (sState == STATE_FINISHED) {
@@ -45,8 +55,13 @@ public abstract class VideoPlaylist {
 		}
 	}
 	
+	/**
+	 * Sets the pointer to the next video in the playlist
+	 * @return True or false depending on whether a next video exists and could be selected
+	 */
 	public static boolean incrementToNext() {
 		sState = STATE_PLAYING;
+		sPlayedIds.add(sCurrentVideo);
 		if (hasNext()) {
 			sCurrentVideo++;
 			return true;
@@ -56,6 +71,9 @@ public abstract class VideoPlaylist {
 		}
 	}
 	
+	/**
+	 * Return a file reference to the video currently being selected
+	 */
 	public static File getCurrentVideo() {
 		if (sState != STATE_FINISHED) {
 			sState = STATE_PLAYING;
@@ -64,7 +82,11 @@ public abstract class VideoPlaylist {
 			return null;
 		}
 	}
-		
+	
+	/**
+	 * Return the ID of the video currently being selected.
+	 * This ID is used in the napping context and to load the files from the ViewActivity.
+	 */
 	public static int getCurrentVideoId() {
 		if (sState != STATE_FINISHED) {
 			sState = STATE_PLAYING;
@@ -74,11 +96,19 @@ public abstract class VideoPlaylist {
 		}
 	}
 	
+	/**
+	 * Resets the playlist to its initial state, keeping all the videos
+	 */
 	public static void reset() {
+		sPlayedIds.clear();
 		sCurrentVideo = 0;
 		sState = STATE_INITIALIZED;
 	}
 	
+	/**
+	 * Returns the internal state of the playlist
+	 * @return
+	 */
 	public static int getState() {
 		return sState;
 	}

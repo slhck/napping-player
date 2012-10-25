@@ -29,13 +29,15 @@ OnCompletionListener, OnPreparedListener, OnVideoSizeChangedListener,
 OnErrorListener{
 	
 	private static final String TAG = ViewActivity.class.getSimpleName();
-	private static final int VIDEO_START_DELAY = 1000;
+	
+	TextView videoIDview;
 	
 	private MediaPlayer mPlayer;
-	TextView videoIDview;
 	private SurfaceView mPlayView;
 	private SurfaceHolder mHolder;
-	private String fileName;
+	
+	private SharedPreferences prefs;
+	
 	int mVideoId;
 	int pauseduration;
 	
@@ -45,6 +47,8 @@ OnErrorListener{
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.showvideo);
+        
+        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         
         View v = findViewById(R.id.layout_video);
         v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
@@ -137,7 +141,8 @@ OnErrorListener{
 	//Starts video after showing Video ID
 	public void delayedStartVideo(){
 		videoIDview.bringToFront();
-		SystemClock.sleep(VIDEO_START_DELAY);
+		long delay = Integer.parseInt(prefs.getString("video_start_delay", "1000"));
+		SystemClock.sleep(delay);
 		videoIDview.setVisibility(View.INVISIBLE);
 		mPlayer.start();
 	}
@@ -182,7 +187,7 @@ OnErrorListener{
 		    LayoutParams lp = mPlayView.getLayoutParams();
 		    
 		    
-		    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		    String displaySetting = prefs.getString("list_scale", "");
 		    
 		    if (displaySetting.equalsIgnoreCase("original")) {
