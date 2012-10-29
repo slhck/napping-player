@@ -1,13 +1,5 @@
 package at.ac.univie.nappingplayer;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;

@@ -1,11 +1,13 @@
 package at.ac.univie.nappingplayer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -115,8 +117,20 @@ public class NappingActivity extends Activity {
 	 */
 	private OnClickListener mButtonFinishListener = new OnClickListener() {
 		public void onClick(View v) {
+			
+			// create a screenshot
+			View activity = findViewById(R.id.layout_napping);
+			activity.setDrawingCacheEnabled(true);
+			Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
+			activity.setDrawingCacheEnabled(false);
+			File result = IOUtil.saveScreenshot(bmp, mName);
+			
 			// export positions from the current view
 			IOUtil.exportPositions(mVideoButtons, mName);
+			
+			// send the image per mail
+			IOUtil.sendFilePerMail(result, mName, v.getContext());
+			
 			finish();
 		}
 	};
