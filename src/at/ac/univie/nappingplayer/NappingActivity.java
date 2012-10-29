@@ -1,7 +1,9 @@
 package at.ac.univie.nappingplayer;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -117,19 +119,24 @@ public class NappingActivity extends Activity {
 	 */
 	private OnClickListener mButtonFinishListener = new OnClickListener() {
 		public void onClick(View v) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+			String date = dateFormat.format(new Date());
 			
 			// create a screenshot
 			View activity = findViewById(R.id.layout_napping);
 			activity.setDrawingCacheEnabled(true);
 			Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
 			activity.setDrawingCacheEnabled(false);
-			File screenshotFile = IOUtil.saveScreenshot(bmp, mName);
+			File screenshotFile = IOUtil.saveScreenshot(bmp, mName, date);
 			
 			// export positions from the current view
-			File positionsFile = IOUtil.exportPositions(mVideoButtons, mName);
+			File positionsFile = IOUtil.exportPositions(mVideoButtons, mName, date);
+			
+			// export configuration
+			File configurationFile = IOUtil.saveConfiguration(mName, date);
 			
 			// send the image per mail
-			IOUtil.sendFilePerMail(screenshotFile, positionsFile, mName, v.getContext());
+			IOUtil.sendFilePerMail(screenshotFile, positionsFile, configurationFile, mName, v.getContext());
 			
 			finish();
 		}

@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 public abstract class IOUtil {
@@ -44,17 +45,101 @@ public abstract class IOUtil {
 		}
 		return output;
 	}
+	
+	/**
+	 * Exports device configuration
+	 */
+	public static File saveConfiguration(String name, String date) {
+		Log.d(TAG, "Logging configuration for user " + name + " at " + date);
+		
+		String logName = date + "-" + name + "-config" + ".csv";
+		File configurationFile = new File(Configuration.getLogFolder(), logName);
+		
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		Log.d(TAG, "Trying to write to file " + configurationFile);
+		try {
+			configurationFile.createNewFile();
+			fw = new FileWriter(configurationFile);
+			bw = new BufferedWriter(fw);
+			bw.write("name," + name);
+			bw.newLine();
+			bw.write("screen-width," + Configuration.getWidth());
+			bw.newLine();
+			bw.write("screen-height," + Configuration.getHeight());
+			bw.newLine();
+			bw.write("release," + Build.VERSION.RELEASE);
+			bw.newLine();
+		} catch (IOException e) {
+			Log.e(TAG, "Couldn't write log file: " + e.toString());
+			e.printStackTrace();
+		} finally {
+			if ((fw != null) && (bw != null)) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch (IOException e) {
+					Log.e(TAG, "Couldn't close file / buffered writer" + e.toString());
+					e.printStackTrace();
+				}
+			}
+		}
+
+		
+		return configurationFile;
+	}
+
+	/**
+	 * Saves the positions of the videos on screen 
+	 */
+	public static File exportPositions(ArrayList<VideoButtonView> buttons,
+			String name, String date) {
+		Log.d(TAG, "Logging results for user " + name  + " at " + date);
+		
+		String logName = date + "-" + name + ".csv";
+		File logFile = new File(Configuration.getLogFolder(), logName);
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		Log.d(TAG, "Trying to write to file " + logFile);
+		try {
+			logFile.createNewFile();
+			fw = new FileWriter(logFile);
+			bw = new BufferedWriter(fw);
+			for (VideoButtonView button : buttons) {
+				Log.d(TAG, "Writing button " + button.mLabel + " with position " + button.getTop() + "/" + button.getLeft());
+				String sep = ";";
+				String videoName = VideoPlaylist.getVideo(button.mVideoId).toString();
+				String line = videoName + sep + button.getLeft() + sep + button.getTop();
+				bw.write(line);
+				bw.newLine();
+			}
+		} catch (IOException e) {
+			Log.e(TAG, "Couldn't write log file: " + e.toString());
+			e.printStackTrace();
+		} finally {
+			if ((fw != null) && (bw != null)) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch (IOException e) {
+					Log.e(TAG, "Couldn't close file / buffered writer" + e.toString());
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return logFile;
+	}
 
 	/**
 	 * Saves the screenshot from a bitmap to a file on the SD card
 	 * @return A reference to the saved file
 	 */
-	public static File saveScreenshot(Bitmap bmp, String name) {
-		Log.d(TAG, "Logging screenshot for user " + name);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
-		String date = dateFormat.format(new Date());
+	public static File saveScreenshot(Bitmap bmp, String name, String date) {
+		Log.d(TAG, "Logging screenshot for user " + name + " at " + date);
+		
 		String logName = date + "-" + name + ".jpg";
-		File screenshotFile = new File(Configuration.sFolderLogs, logName);
+		File screenshotFile = new File(Configuration.getLogFolder(), logName);
 		OutputStream fout = null;
 		try {
 			fout = new FileOutputStream(screenshotFile);
@@ -71,60 +156,10 @@ public abstract class IOUtil {
 		return screenshotFile;
 	}
 
-	
-	/**
-	 * Saves the positions of the videos on screen 
-	 */
-	public static File exportPositions(ArrayList<VideoButtonView> buttons,
-			String name) {
-		Log.d(TAG, "Logging results for user " + name);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
-		String date = dateFormat.format(new Date());
-		String logName = date + "-" + name;
-		File logFile = new File(Configuration.sFolderLogs, logName);
-		FileWriter fw = null;
-		BufferedWriter bw = null;
-		Log.d(TAG, "Trying to write to file " + logFile);
-		try {
-			logFile.createNewFile();
-			fw = new FileWriter(logFile);
-			bw = new BufferedWriter(fw);
-			for (VideoButtonView button : buttons) {
-				Log.d(TAG,
-						"Writing button " + button.mLabel + " with position "
-								+ button.getTop() + "/" + button.getLeft());
-				String sep = ";";
-				String videoName = VideoPlaylist.getVideo(button.mVideoId)
-						.toString();
-				String line = videoName + sep + button.getLeft() + sep
-						+ button.getTop();
-				bw.write(line);
-				bw.newLine();
-			}
-		} catch (IOException e) {
-			Log.e(TAG, "Couldn't write log file: " + e.toString());
-			e.printStackTrace();
-		} finally {
-			if ((fw != null) && (bw != null)) {
-				try {
-					bw.flush();
-					bw.close();
-				} catch (IOException e) {
-					Log.e(TAG,
-							"Couldn't close file / buffered writer"
-									+ e.toString());
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return logFile;
-	}
-
 	/**
 	 * Sends the passed file per mail
 	 */
-	public static void sendFilePerMail(File screenshotsFile, File positionsFile, String name, Context context) {
+	public static void sendFilePerMail(File screenshotsFile, File positionsFile, File configurationFile, String name, Context context) {
 		Log.d(TAG, "Sending e-mail for user "
 				+ name);
 		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
@@ -133,9 +168,11 @@ public abstract class IOUtil {
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Napping Activity Result from " + name);
 		emailIntent.putExtra(Intent.EXTRA_EMAIL, RECV_MAIL);
 		
+		// TODO refactor this and make it more beautiful
 		ArrayList<Uri> uris = new ArrayList<Uri>();
 		uris.add(Uri.parse("file://" + screenshotsFile.toString()));
 		uris.add(Uri.parse("file://" + positionsFile.toString()));
+		uris.add(Uri.parse("file://" + configurationFile.toString()));
 		
 		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 		

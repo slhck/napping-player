@@ -31,7 +31,7 @@ public class StartActivity extends Activity {
         
         try {
         	// initialize SD card
-			Configuration.initialize();
+			Configuration.initialize(this);
 			VideoPlaylist.initialize(Configuration.videos);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
