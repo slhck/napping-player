@@ -71,7 +71,11 @@ public abstract class IOUtil {
 		return screenshotFile;
 	}
 
-	public static void exportPositions(ArrayList<VideoButtonView> buttons,
+	
+	/**
+	 * Saves the positions of the videos on screen 
+	 */
+	public static File exportPositions(ArrayList<VideoButtonView> buttons,
 			String name) {
 		Log.d(TAG, "Logging results for user " + name);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
@@ -113,25 +117,28 @@ public abstract class IOUtil {
 				}
 			}
 		}
+		
+		return logFile;
 	}
 
 	/**
 	 * Sends the passed file per mail
 	 */
-	public static void sendFilePerMail(File file, String name, Context context) {
-		Log.d(TAG, "Sending e-mail from file " + file.toString() + " for user "
+	public static void sendFilePerMail(File screenshotsFile, File positionsFile, String name, Context context) {
+		Log.d(TAG, "Sending e-mail for user "
 				+ name);
-		Intent emailIntent = new Intent(Intent.ACTION_SEND);
+		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 		emailIntent.setType("plain/text");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
-				"Napping Activity Result from " + name);
-		emailIntent.putExtra(Intent.EXTRA_TEXT, "Napping Activity Result from "
-				+ name);
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Napping Activity Result from " + name);
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "Napping Activity Result from " + name);
 		emailIntent.putExtra(Intent.EXTRA_EMAIL, RECV_MAIL);
-		emailIntent.putExtra(Intent.EXTRA_STREAM,
-				Uri.parse("file://" + file.toString()));
-		// context.startActivity(Intent.createChooser(emailIntent,
-		// "Select an app"));
+		
+		ArrayList<Uri> uris = new ArrayList<Uri>();
+		uris.add(Uri.parse("file://" + screenshotsFile.toString()));
+		uris.add(Uri.parse("file://" + positionsFile.toString()));
+		
+		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+		
 		context.startActivity(emailIntent);
 	}
 }

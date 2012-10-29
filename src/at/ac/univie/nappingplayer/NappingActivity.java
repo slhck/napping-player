@@ -123,13 +123,13 @@ public class NappingActivity extends Activity {
 			activity.setDrawingCacheEnabled(true);
 			Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
 			activity.setDrawingCacheEnabled(false);
-			File result = IOUtil.saveScreenshot(bmp, mName);
+			File screenshotFile = IOUtil.saveScreenshot(bmp, mName);
 			
 			// export positions from the current view
-			IOUtil.exportPositions(mVideoButtons, mName);
+			File positionsFile = IOUtil.exportPositions(mVideoButtons, mName);
 			
 			// send the image per mail
-			IOUtil.sendFilePerMail(result, mName, v.getContext());
+			IOUtil.sendFilePerMail(screenshotFile, positionsFile, mName, v.getContext());
 			
 			finish();
 		}
