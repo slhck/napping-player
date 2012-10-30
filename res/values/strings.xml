@@ -27,5 +27,7 @@
 	<string name="list_scale_summary">How should the video be displayed?</string>
 	<string name="video_start_title">Video start delay</string>
 	<string name="video_start_summary">How long in milliseconds the video title is shown?</string>
-	
+	<string name="send_email_title">Send results as email</string>
+	<string name="send_email_summary_active">Emails are sent after an experiment is finished</string>
+	<string name="send_email_summary_inactive">No email is sent after an experiment is finished</string>
 </resources>

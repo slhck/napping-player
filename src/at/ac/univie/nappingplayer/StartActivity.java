@@ -12,6 +12,12 @@ import android.widget.Toast;
 
 public class StartActivity extends Activity {
 
+	Button mPreferencesButton;
+	EditText mEditText;
+	
+	/**
+	 * Called when the activity is first started
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,14 +26,14 @@ public class StartActivity extends Activity {
         View v = findViewById(R.id.layout_start);
         v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
         
-        Button preferencesButton = (Button) findViewById(R.id.button_preferences);
-        preferencesButton.setOnClickListener(new OnClickListener(){
+        mPreferencesButton = (Button) findViewById(R.id.button_preferences);
+        mPreferencesButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				showPreferences();
 			}
         });
+        mEditText = (EditText) findViewById(R.id.et_person_name);
         
         try {
         	// initialize SD card
@@ -41,14 +47,29 @@ public class StartActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
     
+    /**
+     * When we return to this app from somewhere else and an experiment was finished, clear playlist
+     * TODO maybe refactor this as a callback from the napping intent?
+     */
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	if (VideoPlaylist.getState() == VideoPlaylist.STATE_FINISHED) {
+    		VideoPlaylist.reset();
+    		mEditText.setText("");
+    	}
+    }
+    
+    /**
+     * Sets off the napping experiment
+     */
     public void startNapping(View view) {
     	Intent startNapping = new Intent(this, NappingActivity.class);
-    	EditText name = (EditText) findViewById(R.id.et_person_name);
-    	startNapping.putExtra("userName", name.getText().toString());
+    	startNapping.putExtra("userName", mEditText.getText().toString());
     	
-    	if (name.getText().toString().equals("")) {
+    	if (mEditText.getText().toString().equals("")) {
     		Toast.makeText(this, "You need to enter a name!", Toast.LENGTH_SHORT).show();
-    		name.requestFocus();
+    		mEditText.requestFocus();
     		// TODO disable this again
     		// return;
     	}
@@ -60,21 +81,5 @@ public class StartActivity extends Activity {
     	Intent prefIntent = new Intent(this, PreferencesActivity.class);
     	startActivity(prefIntent);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.activity_start, menu);
-//        return true;
-//    }
-//    
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        switch (item.getItemId()) {
-//        case R.id.menu_settings:
-//        	showPreferences();
-//        default:
-//            return super.onOptionsItemSelected(item);
-//        }
-//    }
+    
 }

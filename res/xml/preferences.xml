@@ -10,8 +10,16 @@
         android:title="@string/list_scale_title" />
 
     <EditTextPreference
+        android:defaultValue="1000"
         android:key="video_start_delay"
         android:summary="@string/video_start_summary"
-        android:title="@string/video_start_title" android:defaultValue="1000"/>
+        android:title="@string/video_start_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="send_email"
+        android:summaryOff="@string/send_email_summary_inactive"
+        android:summaryOn="@string/send_email_summary_active"
+        android:title="@string/send_email_title" />
 
 </PreferenceScreen>

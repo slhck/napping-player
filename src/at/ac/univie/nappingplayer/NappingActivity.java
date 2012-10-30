@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -138,7 +140,10 @@ public class NappingActivity extends Activity {
 			File configurationFile = IOUtil.saveConfiguration(mName, date);
 			
 			// send the image per mail
-			IOUtil.sendFilePerMail(screenshotFile, positionsFile, configurationFile, mName, v.getContext());
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+			if (prefs.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
+				IOUtil.sendFilePerMail(screenshotFile, positionsFile, configurationFile, mName, v.getContext());				
+			}
 			
 			finish();
 		}

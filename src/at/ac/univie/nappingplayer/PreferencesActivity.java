@@ -11,8 +11,9 @@ import android.text.InputType;
 public class PreferencesActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 	
-	private static String LIST_SCALE = "list_scale";
-	private static String VIDEO_START_DELAY = "video_start_delay";
+	public static final String LIST_SCALE = "list_scale";
+	public static final String VIDEO_START_DELAY = "video_start_delay";
+	public static final String SEND_EMAIL = "send_email";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (key.equals(LIST_SCALE)) {
 			ListPreference listScalePref = (ListPreference) findPreference(LIST_SCALE);
 			listScalePref.setSummary(listScalePref.getEntry());
@@ -38,15 +38,13 @@ public class PreferencesActivity extends PreferenceActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getPreferenceScreen().getSharedPreferences()
-				.registerOnSharedPreferenceChangeListener(this);
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		getPreferenceScreen().getSharedPreferences()
-				.unregisterOnSharedPreferenceChangeListener(this);
+		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
 }

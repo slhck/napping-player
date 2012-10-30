@@ -141,7 +141,7 @@ OnErrorListener{
 	//Starts video after showing Video ID
 	public void delayedStartVideo(){
 		videoIDview.bringToFront();
-		long delay = Integer.parseInt(prefs.getString("video_start_delay", "1000"));
+		long delay = Integer.parseInt(prefs.getString(PreferencesActivity.VIDEO_START_DELAY, "1000"));
 		SystemClock.sleep(delay);
 		videoIDview.setVisibility(View.INVISIBLE);
 		mPlayer.start();
@@ -188,7 +188,7 @@ OnErrorListener{
 		    
 		    
 		    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		    String displaySetting = prefs.getString("list_scale", "");
+		    String displaySetting = prefs.getString(PreferencesActivity.LIST_SCALE, "");
 		    
 		    if (displaySetting.equalsIgnoreCase("original")) {
 		    	// original size
