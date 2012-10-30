@@ -145,6 +145,7 @@ public class NappingActivity extends Activity {
 				IOUtil.sendFilePerMail(screenshotFile, positionsFile, configurationFile, mName, v.getContext());				
 			}
 			
+			setResult(Activity.RESULT_OK);
 			finish();
 		}
 	};
@@ -198,6 +199,7 @@ public class NappingActivity extends Activity {
         	{
         		@Override
     			public void onClick(DialogInterface dialog, int which) {
+        			setResult(Activity.RESULT_CANCELED);
     				finish();    
     			}
 
