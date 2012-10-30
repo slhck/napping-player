@@ -12,26 +12,21 @@
 		android:layout_gravity="center"
 		>
 	</SurfaceView>
-	
-    <TextView
-	    android:id="@+id/text"
-	    android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:textColor="#FFFFFF"
-        android:textSize="100dip"
-        android:gravity="center" 
-	    >
-	</TextView>    
-	<TextView
-	    android:id="@+id/instructions"
-	    android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:textColor="#FFFFFF"
-        android:textSize="15dip"
-        android:gravity="center" 
-	    >
-	    
-	</TextView>
-    
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="100dip" />
+
+        <TextView
+            android:id="@+id/instructions"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15dip" />
 
 </FrameLayout>

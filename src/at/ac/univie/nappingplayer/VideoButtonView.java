@@ -25,7 +25,7 @@ public class VideoButtonView extends android.widget.Button {
 		this.mVideoId = videoId;
 		this.mLabel = "  " + (mVideoId + 1) + "  ";
 		super.setText(mLabel);
-		super.setTextColor(Color.parseColor("#ffffff"));
+		super.setTextColor(Color.parseColor("#000000"));
 		setLayout();
 		addClickListeners();
 	}

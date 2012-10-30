@@ -119,6 +119,8 @@ public class NappingActivity extends Activity {
 	 */
 	private OnClickListener mButtonFinishListener = new OnClickListener() {
 		public void onClick(View v) {
+			mButtonFinish.setVisibility(View.GONE);
+			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
 			String date = dateFormat.format(new Date());
 			

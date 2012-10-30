@@ -2,17 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_start"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="95dp"
-        android:text="@string/welcome"
-        android:textSize="30dp"
-        tools:context=".StartActivity" />
+    android:layout_height="match_parent" 
+    android:background="#CCCCCC"
+    >
 
     <Button
         android:id="@+id/button_start"
@@ -23,7 +15,7 @@
         android:layout_marginBottom="95dp"
         android:onClick="startNapping"
         android:text="@string/start"
-        android:textColor="#ffffff" />
+        android:textColor="#000000" />
 
     <EditText
         android:id="@+id/et_person_name"
@@ -51,6 +43,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/title_activity_preferences"
-        android:textColor="#ffffff" />
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_preferences"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="101dp"
+        android:text="@string/welcome"
+        android:textSize="30dp"
+        tools:context=".StartActivity" />
 
 </RelativeLayout>
