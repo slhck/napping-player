@@ -1,4 +1,4 @@
-package at.ac.univie.nappingplayer;
+package at.ac.univie.nappingplayer.util;
 
 import java.io.File;
 import java.util.ArrayList;

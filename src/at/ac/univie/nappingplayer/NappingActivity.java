@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import at.ac.univie.nappingplayer.util.IOUtil;
+import at.ac.univie.nappingplayer.views.VideoButtonView;
 
 /**
  * Main activity for the napping experiment
@@ -97,12 +99,6 @@ public class NappingActivity extends Activity {
 			mButtonPlayNext.setVisibility(View.GONE);
 			mButtonFinish.setVisibility(View.VISIBLE);
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_napping, menu);
-		return true;
 	}
 
 	/**
@@ -202,7 +198,7 @@ public class NappingActivity extends Activity {
         		@Override
     			public void onClick(DialogInterface dialog, int which) {
         			setResult(Activity.RESULT_CANCELED);
-    				finish();    
+    				finish();
     			}
 
         	})

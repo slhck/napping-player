@@ -1,4 +1,4 @@
-package at.ac.univie.nappingplayer;
+package at.ac.univie.nappingplayer.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,20 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;
+import at.ac.univie.nappingplayer.ViewActivity;
 
 public class VideoButtonView extends android.widget.Button {
 	private static final String TAG = VideoButtonView.class.getSimpleName();
 	
 	private static final int VIBRATE_DURATION = 50;
 	
-	String mLabel;
-	int mVideoId;
+	private String mLabel;
+	private int mVideoId;
 
 	public VideoButtonView(Context context, int videoId) {
 		super(context);
-		this.mVideoId = videoId;
-		this.mLabel = "  " + (mVideoId + 1) + "  ";
-		super.setText(mLabel);
+		this.setVideoId(videoId);
+		this.setLabel("  " + (getVideoId() + 1) + "  ");
+		super.setText(getLabel());
 		super.setTextColor(Color.parseColor("#000000"));
 		setLayout();
 		addClickListeners();
@@ -86,10 +87,10 @@ public class VideoButtonView extends android.widget.Button {
 						Context context = v.getContext();
 						Intent showVideo = new Intent(context,
 								ViewActivity.class);
-						showVideo.putExtra("videoId", mVideoId);
+						showVideo.putExtra("videoId", getVideoId());
 						Log.d(TAG,
 								"User pressed button. Playing video associated with it: "
-										+ mVideoId);
+										+ getVideoId());
 						context.startActivity(showVideo);
 					} else {
 						// cancel drag, do nothing
@@ -100,6 +101,22 @@ public class VideoButtonView extends android.widget.Button {
 				return false;
 			}
 		});
+	}
+
+	public int getVideoId() {
+		return mVideoId;
+	}
+
+	public void setVideoId(int mVideoId) {
+		this.mVideoId = mVideoId;
+	}
+
+	public String getLabel() {
+		return mLabel;
+	}
+
+	public void setLabel(String mLabel) {
+		this.mLabel = mLabel;
 	}
 	
 //	public static void exportPositions(ArrayList<VideoButtonView> buttons, String name) {

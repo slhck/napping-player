@@ -43,6 +43,13 @@ public abstract class VideoPlaylist {
 	}
 	
 	/**
+	 * Returns the video ID for a given file
+	 */
+	public static int getId(File f) {
+		return sFiles.indexOf(f);
+	}
+	
+	/**
 	 * Confirms if the playlist has a next video to play
 	 * @return
 	 */

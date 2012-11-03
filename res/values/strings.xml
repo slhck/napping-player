@@ -3,35 +3,46 @@
     <string name="app_name">Napping Player</string>
     <string name="title_activity_start">Welcome to Napping Player!</string>
     <string name="title_activity_preferences">Preferences</string>
-
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    
+
     <!-- Start Activity -->
     <string name="welcome">Welcome to Napping Player!</string>
     <string name="menu_settings">Preferences</string>
     <string name="menu_data">Experiment Data</string>
     <string name="start">Start Napping!</string>
     <string name="enter_name">What\'s your name?</string>
-	<string name="enter_name_prompt">You need to enter a name!</string>
-	<string name="finished_napping">You\'re done. Please hand this tablet to the instructor.</string>
-	<string name="canceled_napping">You\'ve canceled this experiment.</string>
-    
+    <string name="enter_name_prompt">You need to enter a name!</string>
+    <string name="finished_napping">You\'re done. Please hand this tablet to the instructor.</string>
+    <string name="canceled_napping">You\'ve canceled this experiment.</string>
+
     <!-- Napping Activity -->
     <string name="play_next_video">Play Next Video!</string>
     <string name="click_play_to_start">Click \'Play Next Video\' to start!</string>
     <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' once you\'re done!</string>
-	<string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
-	<string name="finish">Finish!</string>
-	<string name="dialog_close_header">Exit?</string>
-	<string name="dialog_close_body">Do you really want to quit the experiment?</string>
-	
-	<!-- Prefs -->
-	<string name="list_scale_title">Display mode</string>
-	<string name="list_scale_summary">How should the video be displayed?</string>
-	<string name="video_start_title">Video start delay</string>
-	<string name="video_start_summary">How long in milliseconds the video title is shown?</string>
-	<string name="send_email_title">Send results as email</string>
-	<string name="send_email_summary_active">Emails are sent after an experiment is finished</string>
-	<string name="send_email_summary_inactive">No email is sent after an experiment is finished</string>
+    <string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
+    <string name="finish">Finish!</string>
+    <string name="dialog_close_header">Exit?</string>
+    <string name="dialog_close_body">Do you really want to quit the experiment?</string>
+
+    <!-- Prefs -->
+    <string name="list_scale_title">Display mode</string>
+    <string name="list_scale_summary">How should the video be displayed?</string>
+    <string name="video_start_title">Video start delay</string>
+    <string name="video_start_summary">How long in milliseconds the video title is shown?</string>
+    <string name="send_email_title">Send results as email</string>
+    <string name="send_email_summary_active">Emails are sent after an experiment is finished</string>
+    <string name="send_email_summary_inactive">No email is sent after an experiment is finished</string>
+    <string name="hello_world">Hello world!</string>
+
+    <!-- Data Explorer -->
+    <string name="title_activity_data_explorer">Experiment Data</string>
+    <string name="menu_clear">Delete all log files</string>
+    <string name="log_files">Log Files</string>
+    <string name="video_files">Video Files</string>
+    <string name="dialog_clear_header">Delete all files?</string>
+    <string name="dialog_clear_body">Do you really want to delete all log files? This cannot be undone!</string>
+    <string name="dialog_unknown_header">Unkown file</string>
+    <string name="dialog_unknown_body">Cannot view this file type at the moment.</string>
+    
 </resources>

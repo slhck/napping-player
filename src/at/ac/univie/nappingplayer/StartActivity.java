@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import at.ac.univie.nappingplayer.util.Configuration;
 
 public class StartActivity extends Activity {
 	private static final String TAG = StartActivity.class.getSimpleName();
@@ -117,8 +118,7 @@ public class StartActivity extends Activity {
 	}
 	
 	public void startDataExplorer() {
-		// TODO: Implement data explorer
-//		Intent prefIntent = new Intent(this, PreferencesActivity.class);
-//		startActivity(prefIntent);
+		Intent dataIntent = new Intent(this, DataExplorerActivity.class);
+		startActivity(dataIntent);
 	}
 }
