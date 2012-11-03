@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,64 +15,36 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class StartActivity extends Activity {
-
 	private static final String TAG = StartActivity.class.getSimpleName();
 	
-	Button mPreferencesButton;
 	EditText mEditText;
 	
 	private static final int NAPPING_START_REQUEST = 0;
-	
+
 	/**
 	 * Called when the activity is first started
 	 */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
-        
-        View v = findViewById(R.id.layout_start);
-        v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
-        
-        mPreferencesButton = (Button) findViewById(R.id.button_preferences);
-        mPreferencesButton.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				showPreferences();
-			}
-        });
-        mEditText = (EditText) findViewById(R.id.et_person_name);
-        
-        try {
-        	// initialize SD card
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_start);
+		View v = findViewById(R.id.layout_start);
+		v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
+		
+		mEditText = (EditText) findViewById(R.id.et_person_name);
+		try {
+			// initialize SD card
 			Configuration.initialize(this);
-			VideoPlaylist.initialize(Configuration.videos);
+			VideoPlaylist.initialize(Configuration.getVideos());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, "Error while initializing SD card. Aborting");
 			e.printStackTrace();
+			finish();
 		}
-        
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-    }
-    
-    /**
-     * Sets off the napping experiment
-     */
-    public void startNapping(View view) {
-    	Intent startNapping = new Intent(this, NappingActivity.class);
-    	startNapping.putExtra("userName", mEditText.getText().toString());
-    	
-    	if (mEditText.getText().toString().equals("")) {
-    		Toast.makeText(this, getText(R.string.enter_name_prompt), Toast.LENGTH_SHORT).show();
-    		mEditText.requestFocus();
-    		// TODO disable this again
-    		// return;
-    	}
-    	
-    	startActivityForResult(startNapping, NAPPING_START_REQUEST);
-    }
-    
-    /**
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+	}
+
+	/**
 	 * Return callback for when another activity finishes (e.g. napping)
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -79,27 +54,71 @@ public class StartActivity extends Activity {
 				// if we return from napping and everything went as expected
 				if (VideoPlaylist.getState() == VideoPlaylist.STATE_FINISHED) {
 					resetExperiment();
-		    		Toast.makeText(this, getText(R.string.finished_napping), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, getText(R.string.finished_napping),
+							Toast.LENGTH_LONG).show();
 				}
 			} else if (resultCode == RESULT_CANCELED) {
 				// the user canceled the activity
 				resetExperiment();
-				Toast.makeText(this, getText(R.string.canceled_napping), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getText(R.string.canceled_napping),
+						Toast.LENGTH_LONG).show();
 			}
 		}
 	}
-    
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_start, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.menu_data:
+			startDataExplorer();
+			return true;
+		case R.id.menu_settings:
+			startPreferences();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	/**
-	 * Resets experiment data (i.e. clears name and playlist state) for next observer
+	 * Resets experiment data (i.e. clears name and playlist state) for next
+	 * observer
 	 */
 	private void resetExperiment() {
 		VideoPlaylist.reset();
 		mEditText.setText("");
 	}
 	
-    public void showPreferences() {
-    	Intent prefIntent = new Intent(this, PreferencesActivity.class);
-    	startActivity(prefIntent);
-    }
-    
+	/**
+	 * Sets off the napping experiment
+	 */
+	public void startNapping(View view) {
+		Intent startNapping = new Intent(this, NappingActivity.class);
+		startNapping.putExtra("userName", mEditText.getText().toString());
+		if (mEditText.getText().toString().equals("")) {
+			Toast.makeText(this, getText(R.string.enter_name_prompt), Toast.LENGTH_SHORT).show();
+			mEditText.requestFocus();
+			return;
+		}
+		startActivityForResult(startNapping, NAPPING_START_REQUEST);
+	}
+
+	public void startPreferences() {
+		Intent prefIntent = new Intent(this, PreferencesActivity.class);
+		startActivity(prefIntent);
+	}
+	
+	public void startDataExplorer() {
+		// TODO: Implement data explorer
+//		Intent prefIntent = new Intent(this, PreferencesActivity.class);
+//		startActivity(prefIntent);
+	}
 }

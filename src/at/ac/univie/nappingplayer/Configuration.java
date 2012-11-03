@@ -1,9 +1,10 @@
 package at.ac.univie.nappingplayer;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Display;
@@ -20,7 +21,7 @@ public abstract class Configuration {
 	private static int mScreenHeight;
 	
 	/**
-	 * Path of the folder in which videos are stored, relative to the SD card
+	 * Path of the folder in which sVideos are stored, relative to the SD card
 	 * root with a trailing slash. If it does not exist, it will be created
 	 * automatically on the SD card.
 	 */
@@ -28,7 +29,7 @@ public abstract class Configuration {
 	public static final String PATH_LOGS 	= new String("NappingLogs/");
 	
 	/**List of Files in Video Directory */
-	static File[] videos;
+	private static ArrayList<File> sVideos;
 
 	/**
 	 * Tries to initialize the SD card, obtain the file handles and then create
@@ -38,15 +39,20 @@ public abstract class Configuration {
 		if (Environment.getExternalStorageState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
 			sSDcard = Environment.getExternalStorageDirectory();
 			
-			sFolderVideos = new File(sSDcard, PATH_VIDEOS);
-			sFolderLogs = new File(sSDcard, PATH_LOGS);
-			
-			// create the data and video directory if they don't exist already
-			sFolderVideos.mkdirs();
-			sFolderLogs.mkdirs();
-			
-			//make file list
-			videos = sFolderVideos.listFiles();
+			try {
+				// create the data and video directory if they don't exist already
+				sFolderVideos = new File(sSDcard, PATH_VIDEOS);
+				sFolderVideos.mkdirs();
+				sFolderLogs = new File(sSDcard, PATH_LOGS);
+				sFolderLogs.mkdirs();
+				
+				// get the list of video files
+				// TODO: Refine based on file extensions, invisibles, et cetera.
+				sVideos = new ArrayList<File>(Arrays.asList(sFolderVideos.listFiles()));
+			} catch (Exception e) {
+				Log.e(TAG, "Error while creating directories or fetching files: " + e.toString());
+				throw new Exception(e);
+			}
 		} else {
 			Log.e(TAG, "Could not initialize SD card");
 			throw new Exception("Could not open SD card!");
@@ -55,7 +61,7 @@ public abstract class Configuration {
 		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		
-//		TODO: Fix me for upper API levels
+//		FIXME: Fix me for upper API levels
 //		http://stackoverflow.com/q/1016896/
 //		try { 
 //			Point size = new Point();
@@ -84,6 +90,9 @@ public abstract class Configuration {
 		return mScreenHeight;
 	}
 	
+	public static ArrayList<File> getVideos() {
+		return sVideos;
+	}
 	
 	
 	

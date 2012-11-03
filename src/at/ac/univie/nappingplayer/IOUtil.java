@@ -147,10 +147,9 @@ public abstract class IOUtil {
 			fout.flush();
 			fout.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, "Couldn't find file " + logName);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, "Error while saving file " + logName);
 			e.printStackTrace();
 		}
 		return screenshotFile;
@@ -159,20 +158,21 @@ public abstract class IOUtil {
 	/**
 	 * Sends the passed file per mail
 	 */
-	public static void sendFilePerMail(File screenshotsFile, File positionsFile, File configurationFile, String name, Context context) {
-		Log.d(TAG, "Sending e-mail for user "
-				+ name);
+	public static void sendFilePerMail(ArrayList<File> files, String name, Context context) {
+		Log.d(TAG, "Sending e-mail for user " + name);
+		
 		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+		
 		emailIntent.setType("plain/text");
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Napping Activity Result from " + name);
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Napping Activity Result from " + name);
 		emailIntent.putExtra(Intent.EXTRA_EMAIL, RECV_MAIL);
 		
-		// TODO refactor this and make it more beautiful
+		// merge all files into one list of URIs
 		ArrayList<Uri> uris = new ArrayList<Uri>();
-		uris.add(Uri.parse("file://" + screenshotsFile.toString()));
-		uris.add(Uri.parse("file://" + positionsFile.toString()));
-		uris.add(Uri.parse("file://" + configurationFile.toString()));
+		for (File f : files) {
+			uris.add(Uri.parse("file://" + f.toString()));
+		}
 		
 		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 		

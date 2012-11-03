@@ -15,7 +15,7 @@ public abstract class VideoPlaylist {
 
 	private static final String TAG = VideoPlaylist.class.getSimpleName();
 	
-	static ArrayList<File> 	sFiles;
+	private static ArrayList<File> 	sFiles;
 	static ArrayList<Integer>   sPlayedIds;
 	private static int 		sCurrentVideo;
 	private static int 		sState;
@@ -24,15 +24,15 @@ public abstract class VideoPlaylist {
 	public static final int STATE_PLAYING 		= 2;
 	public static final int STATE_FINISHED 		= 3;
 	
-	// order fields, TODO
+	// TODO: order implementation for playlist 
 	public static final int ORDER_SEQUENTIAL 	= 1;
 	public static final int ORDER_RANDOM 		= 2;
 	
-	public static void initialize(File[] files) {
-		sFiles = new ArrayList<File>(Arrays.asList(files));
-		sPlayedIds = new ArrayList<Integer>();
-		sCurrentVideo = 0;
-		sState = STATE_INITIALIZED;
+	public static void initialize(ArrayList<File> files) {
+		sFiles 			= files;
+		sPlayedIds 		= new ArrayList<Integer>();
+		sCurrentVideo 	= 0;
+		sState 			= STATE_INITIALIZED;
 	}
 	
 	/**

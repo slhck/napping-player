@@ -11,9 +11,9 @@ import android.text.InputType;
 public class PreferencesActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 	
-	public static final String LIST_SCALE = "list_scale";
-	public static final String VIDEO_START_DELAY = "video_start_delay";
-	public static final String SEND_EMAIL = "send_email";
+	public static final String LIST_SCALE 			= "list_scale";
+	public static final String VIDEO_START_DELAY 	= "video_start_delay";
+	public static final String SEND_EMAIL 			= "send_email";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

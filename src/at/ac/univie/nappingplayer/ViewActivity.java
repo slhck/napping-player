@@ -111,14 +111,13 @@ OnErrorListener{
     
 	@Override
 	public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
+		Log.e(TAG, "Error while playing video.");
 		return false;
 	}
 
 	@Override
 	public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "Video size changed to " + width + "x" + height);
 	}
 
 	/**
@@ -151,8 +150,7 @@ OnErrorListener{
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "Surface changed");
 	}
 
 	@Override
@@ -228,7 +226,6 @@ OnErrorListener{
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "Surface destroyed");
 	}
 }

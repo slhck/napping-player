@@ -59,8 +59,6 @@ public class NappingActivity extends Activity {
 		mInfoText = (TextView) findViewById(R.id.tv_info_message);
 		
 		mVideoButtons = new ArrayList<VideoButtonView>();
-		
-		Log.d(TAG, "Files to play: " + VideoPlaylist.sFiles.toString());
 	}
 
 	@Override
@@ -142,7 +140,11 @@ public class NappingActivity extends Activity {
 			// send the image per mail
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 			if (prefs.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
-				IOUtil.sendFilePerMail(screenshotFile, positionsFile, configurationFile, mName, v.getContext());				
+				ArrayList<File> files = new ArrayList<File>();
+				files.add(configurationFile);
+				files.add(screenshotFile);
+				files.add(positionsFile);
+				IOUtil.sendFilePerMail(files, mName, v.getContext());				
 			}
 			
 			setResult(Activity.RESULT_OK);
