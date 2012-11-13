@@ -3,6 +3,7 @@ package at.ac.univie.nappingplayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import android.util.Log;
 
@@ -33,6 +34,9 @@ public abstract class VideoPlaylist {
 		sPlayedIds 		= new ArrayList<Integer>();
 		sCurrentVideo 	= 0;
 		sState 			= STATE_INITIALIZED;
+
+		// TODO: Sort by name, but add other options later
+		Collections.sort(sFiles);
 	}
 	
 	/**
