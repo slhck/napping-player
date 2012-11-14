@@ -3,7 +3,17 @@ napping-player
 
 ![](http://www.dropbox.com/u/84665/quassumm/nplayer.png)
 
-This is a video player for Android tablets that allows to conduct "Napping" experiments. 
+This is a video player for Android tablets that allows to conduct "Napping" experiments. What are napping experiments?
+
+From Nestrud, Michael A., and Harry T. Lawless. "Recovery of subsampled dimensions and configurations derived from napping data by MFA and MDS." Attention, Perception, & Psychophysics 73.4 (2011): 1266-1278:
+
+> Projective mapping is a relatively new psychological measurement method that was introduced in the mid-1990s […]. It has also been coined “napping” (Pagès, 2005), owing to the French term for tablecloth. The method involves having
+participants evaluate and physically place stimuli (usually food items) on a large sheet of paper (approximately 60 cm ×
+60 cm). Stimuli that are similar are placed close together, and stimuli that are dissimilar are placed farther apart. The data
+collected are the X,Y coordinates of the items with the origin typically being the bottom left of the paper, although it is
+arbitrary. The X and Y coordinates represent attributes, so we have information on two attributes for each stimulus.
+
+
 
 ## Features
 
