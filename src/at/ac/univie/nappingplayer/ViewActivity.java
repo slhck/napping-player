@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -228,4 +230,10 @@ OnErrorListener{
 	public void surfaceDestroyed(SurfaceHolder arg0) {
 		Log.d(TAG, "Surface destroyed");
 	}
+	
+	@Override
+	public void onBackPressed() {
+		
+	}
+	
 }

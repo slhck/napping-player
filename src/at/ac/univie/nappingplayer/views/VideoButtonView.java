@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;
+import at.ac.univie.nappingplayer.NappingActivity;
 import at.ac.univie.nappingplayer.ViewActivity;
 
 public class VideoButtonView extends android.widget.Button {
@@ -85,12 +86,9 @@ public class VideoButtonView extends android.widget.Button {
 						// a real click if the touchdown time was short enough
 						// and no movement
 						Context context = v.getContext();
-						Intent showVideo = new Intent(context,
-								ViewActivity.class);
+						Intent showVideo = new Intent(context, ViewActivity.class);
 						showVideo.putExtra("videoId", getVideoId());
-						Log.d(TAG,
-								"User pressed button. Playing video associated with it: "
-										+ getVideoId());
+						Log.d(TAG, "User pressed button. Playing video associated with it: " + getVideoId());
 						context.startActivity(showVideo);
 					} else {
 						// cancel drag, do nothing

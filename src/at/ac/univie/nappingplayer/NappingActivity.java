@@ -31,7 +31,8 @@ import at.ac.univie.nappingplayer.views.VideoButtonView;
  */
 public class NappingActivity extends Activity {
 	private static final String TAG = NappingActivity.class.getSimpleName();
-	private static final int VIDEO_PLAY_REQUEST = 0;
+	public static final int VIDEO_NEXT_REQUEST = 0;
+	public static final int VIDEO_SINGLE_REQUEST = 1;
 	Button mButtonPlayNext;
 	Button mButtonFinish;
 	TextView mInfoText;
@@ -166,14 +167,22 @@ public class NappingActivity extends Activity {
 		Intent showVideo = new Intent(this, ViewActivity.class);
 		showVideo.putExtra("videoId", mCurrentVideoId);
 		Log.d(TAG, "User pressed button. Playing next video with id " + mCurrentVideoId);
-		startActivityForResult(showVideo, VIDEO_PLAY_REQUEST);
+		startActivityForResult(showVideo, VIDEO_NEXT_REQUEST);
+	}
+	
+	/**
+	 * Play a single video from the playlist
+	 * @param id The video id to be played
+	 */
+	public void playSingle(int id) {
+		// TODO: Ideally, this should be called instead of the intent from the VideoButtonView.
 	}
 
 	/**
 	 * Return callback for when another activity finishes (e.g. video playing)
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == VIDEO_PLAY_REQUEST) {
+		if (requestCode == VIDEO_NEXT_REQUEST) {
 			// if we return from a single video play and it played successfully
 			if (resultCode == RESULT_OK) {
 				int finishedId = data.getIntExtra("videoId", -1);
@@ -184,6 +193,8 @@ public class NappingActivity extends Activity {
 				// add the corresponding button for the video
 				addButtonForVideo(finishedId);
 			}
+		} else if (requestCode == VIDEO_SINGLE_REQUEST) {
+			// do nothing
 		}
 	}
 	
