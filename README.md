@@ -1,6 +1,8 @@
 napping-player
 ==============
 
+![](http://www.dropbox.com/u/84665/quassumm/nplayer.png)
+
 This is a video player for Android tablets that allows to conduct "Napping" experiments. 
 
 ## Features
