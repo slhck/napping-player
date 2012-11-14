@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;
-import at.ac.univie.nappingplayer.NappingActivity;
+import at.ac.univie.nappingplayer.StartVideoListener;
 import at.ac.univie.nappingplayer.ViewActivity;
 
 public class VideoButtonView extends android.widget.Button {
 	private static final String TAG = VideoButtonView.class.getSimpleName();
-	
+	private static final int CLICK_DURATION = 100;
 	private static final int VIBRATE_DURATION = 50;
 	
 	private String mLabel;
@@ -36,15 +36,14 @@ public class VideoButtonView extends android.widget.Button {
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
-		//p.addRule(RelativeLayout.BELOW, R.id.button_play_next);
 		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		p.addRule(RelativeLayout.CENTER_VERTICAL);
+		// TODO: More intelligent placement?
 		super.setLayoutParams(p);
 	}
 
 	private void addClickListeners() {
 		this.setOnTouchListener(new View.OnTouchListener() {
-			private static final int CLICK_DURATION = 100;
 			long touchDownTime;
 			int elapsedTime;
 			boolean dragStarted = false;
@@ -63,8 +62,7 @@ public class VideoButtonView extends android.widget.Button {
 					if (SystemClock.elapsedRealtime() - touchDownTime > CLICK_DURATION) {
 						// if we haven't vibrated yet
 						if (!dragStarted) {
-							Vibrator vibrator = (Vibrator) v.getContext()
-									.getSystemService(Context.VIBRATOR_SERVICE);
+							Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
 							vibrator.vibrate(VIBRATE_DURATION);
 							dragStarted = true;
 						} else {
@@ -82,14 +80,11 @@ public class VideoButtonView extends android.widget.Button {
 					elapsedTime = (int) (SystemClock.elapsedRealtime() - touchDownTime);
 					Log.d(TAG, "Button UP event, elapsed time since touch: " + elapsedTime);
 					if (elapsedTime <= CLICK_DURATION) {
-						Log.d(TAG, "Button time less than 100ms, click");
-						// a real click if the touchdown time was short enough
-						// and no movement
+						Log.d(TAG, "Button time less than click_duration, click registered");
+						// a real click if the touchdown time was short enough and no movement
 						Context context = v.getContext();
-						Intent showVideo = new Intent(context, ViewActivity.class);
-						showVideo.putExtra("videoId", getVideoId());
-						Log.d(TAG, "User pressed button. Playing video associated with it: " + getVideoId());
-						context.startActivity(showVideo);
+						StartVideoListener listener = (StartVideoListener) context;
+						listener.onStartVideoRequest((VideoButtonView) v);
 					} else {
 						// cancel drag, do nothing
 						dragStarted = false;
@@ -116,51 +111,5 @@ public class VideoButtonView extends android.widget.Button {
 	public void setLabel(String mLabel) {
 		this.mLabel = mLabel;
 	}
-	
-//	public static void exportPositions(ArrayList<VideoButtonView> buttons, String name) {
-//		
-//		Log.d(TAG, "Logging results for user " + name);
-//		
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
-//		String date = dateFormat.format(new Date());
-//		String logName = date + "-" + name;
-//		File logFile = new File(Configuration.sFolderLogs, logName);
-//		
-//		FileWriter fw = null;
-//		BufferedWriter bw = null;
-//		
-//		Log.d(TAG, "Trying to write to file " + logFile);
-//		try {
-//			logFile.createNewFile();
-//			fw = new FileWriter(logFile);
-//			bw = new BufferedWriter(fw);
-//			
-//			for (VideoButtonView button : buttons) {
-//				Log.d(TAG, "Writing button " + button.mLabel + " with position " + button.getTop() + "/" + button.getLeft());
-//				
-//				String sep = ";";
-//				String videoName = VideoPlaylist.getVideo(button.mVideoId).toString();
-//				String line = videoName + sep + button.getLeft() + sep + button.getTop();
-//				
-//				bw.write(line);
-//				bw.newLine();
-//			}
-//		} catch (IOException e) {
-//			Log.e(TAG, "Couldn't write log file: " + e.toString());
-//			e.printStackTrace();
-//		} finally {
-//			if ((fw != null) && (bw != null)) {
-//				try {
-//					bw.flush();
-//					bw.close();
-//				} catch (IOException e) {
-//					Log.e(TAG, "Couldn't close file / buffered writer" + e.toString());
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	
-//		
-//	}
-	
+		
 }

@@ -29,7 +29,7 @@ import at.ac.univie.nappingplayer.views.VideoButtonView;
  * @author werner
  *
  */
-public class NappingActivity extends Activity {
+public class NappingActivity extends Activity implements StartVideoListener {
 	private static final String TAG = NappingActivity.class.getSimpleName();
 	public static final int VIDEO_NEXT_REQUEST = 0;
 	public static final int VIDEO_SINGLE_REQUEST = 1;
@@ -175,7 +175,10 @@ public class NappingActivity extends Activity {
 	 * @param id The video id to be played
 	 */
 	public void playSingle(int id) {
-		// TODO: Ideally, this should be called instead of the intent from the VideoButtonView.
+		Intent showVideo = new Intent(this, ViewActivity.class);
+		showVideo.putExtra("videoId", id);
+		Log.d(TAG, "User pressed button. Playing single video with id " + id);
+		startActivityForResult(showVideo, VIDEO_SINGLE_REQUEST);
 	}
 
 	/**
@@ -220,5 +223,10 @@ public class NappingActivity extends Activity {
 	private void showMessage(CharSequence charSequence) {
 		//mInfoText.setText(charSequence);
 		Toast.makeText(this, charSequence, Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void onStartVideoRequest(VideoButtonView btn) {
+		playSingle(btn.getVideoId());
 	}
 }

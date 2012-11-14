@@ -84,6 +84,7 @@ public class DataExplorerActivity extends Activity {
 	        } else if (c.getTag() == DataExplorerChild.TAG_VIDEO) { 
 	        	playVideo(c.getFile());
 	        } else {
+	        	// TODO: This is where we'd show an image if possible
 	        	showUnknownDialog();
 	        }
 	        return true;

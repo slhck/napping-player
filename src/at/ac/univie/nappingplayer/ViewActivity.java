@@ -26,6 +26,11 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+/**
+ * Class that plays a video file specified through intent parameter
+ * @author werner
+ *
+ */
 public class ViewActivity extends Activity implements Callback,
 OnCompletionListener, OnPreparedListener, OnVideoSizeChangedListener,
 OnErrorListener{
