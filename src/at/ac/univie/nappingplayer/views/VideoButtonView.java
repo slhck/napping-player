@@ -18,7 +18,7 @@ public class VideoButtonView extends android.widget.Button {
 	private static final String TAG = VideoButtonView.class.getSimpleName();
 	private static final int CLICK_DURATION = 100;
 	private static final int VIBRATE_DURATION = 50;
-	
+	private static final int STATUS_BAR_HEIGHT = 35;
 	private String mLabel;
 	private int mVideoId;
 
@@ -70,7 +70,7 @@ public class VideoButtonView extends android.widget.Button {
 							MarginLayoutParams marginParams = new MarginLayoutParams(v.getLayoutParams());
 							int left = (int) event.getRawX() - (v.getWidth() / 2);
 							int top  = (int) event.getRawY() - (v.getHeight());
-							marginParams.setMargins(left, top, 0, 0);
+							marginParams.setMargins(left, top - STATUS_BAR_HEIGHT, 0, 0);
 							RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
 							v.setLayoutParams(layoutParams);
 						}

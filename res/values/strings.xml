@@ -24,8 +24,13 @@
     <string name="finish">Finish!</string>
     <string name="dialog_close_header">Exit?</string>
     <string name="dialog_close_body">Do you really want to quit the experiment?</string>
-
+    <string name="menu_play_next">Play Next Video</string>
+    <string name="menu_finish">Finish</string>
+	<string name="menu_group">Group Videos</string>
+    
     <!-- Prefs -->
+    <string name="pref_cat_video">Video preferences</string>
+    <string name="pref_cat_post_exp">Post-experiment options</string>
     <string name="list_scale_title">Display mode</string>
     <string name="list_scale_summary">How should the video be displayed?</string>
     <string name="video_start_title">Video start delay</string>
@@ -42,7 +47,7 @@
     <string name="video_files">Video Files</string>
     <string name="dialog_clear_header">Delete all files?</string>
     <string name="dialog_clear_body">Do you really want to delete all log files? This cannot be undone!</string>
-    <string name="dialog_unknown_header">Unkown file</string>
+    <string name="dialog_unknown_header">Unknown file</string>
     <string name="dialog_unknown_body">Cannot view this file type at the moment.</string>
     
 </resources>

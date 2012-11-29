@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
+<PreferenceCategory 
+    android:title="@string/pref_cat_video">
     <ListPreference
         android:defaultValue="1"
         android:entries="@array/list_scale_array"
@@ -13,13 +14,16 @@
         android:defaultValue="1000"
         android:key="video_start_delay"
         android:summary="@string/video_start_summary"
-        android:title="@string/video_start_title" />
-
+        android:title="@string/video_start_title" />    
+</PreferenceCategory>
+<PreferenceCategory 
+    android:title="@string/pref_cat_post_exp">
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="send_email"
         android:summaryOff="@string/send_email_summary_inactive"
         android:summaryOn="@string/send_email_summary_active"
-        android:title="@string/send_email_title" />
+        android:title="@string/send_email_title" />    
+</PreferenceCategory>
 
 </PreferenceScreen>

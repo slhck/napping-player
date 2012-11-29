@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,8 +35,11 @@ public class NappingActivity extends Activity implements StartVideoListener {
 	private static final String TAG = NappingActivity.class.getSimpleName();
 	public static final int VIDEO_NEXT_REQUEST = 0;
 	public static final int VIDEO_SINGLE_REQUEST = 1;
-	Button mButtonPlayNext;
-	Button mButtonFinish;
+	
+	MenuItem mMenuPlayNext;
+	MenuItem mMenuGroup;
+	MenuItem mMenuFinish;
+	
 	TextView mInfoText;
 	String mName;
 	int mCurrentVideoId;
@@ -54,10 +59,10 @@ public class NappingActivity extends Activity implements StartVideoListener {
 		Intent intent = getIntent();
 		mName = intent.getStringExtra("userName");
 		
-		mButtonPlayNext = (Button) findViewById(R.id.button_play_next);
-		mButtonPlayNext.setOnClickListener(mButtonPlayNextListener);
-		mButtonFinish = (Button) findViewById(R.id.button_finish);
-		mButtonFinish.setOnClickListener(mButtonFinishListener);
+//		mButtonPlayNext = (Button) findViewById(R.id.button_play_next);
+//		mButtonPlayNext.setOnClickListener(mButtonPlayNextListener);
+//		mButtonFinish = (Button) findViewById(R.id.button_finish);
+//		mButtonFinish.setOnClickListener(mButtonFinishListener);
 		
 		mInfoText = (TextView) findViewById(R.id.tv_info_message);
 		
@@ -97,8 +102,26 @@ public class NappingActivity extends Activity implements StartVideoListener {
 			// playlist has finished, we should probably disable the "play next" button
 			Log.d(TAG, "Playlist finished.");
 			showMessage(getText(R.string.seen_all));
-			mButtonPlayNext.setVisibility(View.GONE);
-			mButtonFinish.setVisibility(View.VISIBLE);
+//			mButtonPlayNext.setVisibility(View.GONE);
+//			mButtonFinish.setVisibility(View.VISIBLE);
+			mMenuPlayNext.setEnabled(false);
+			mMenuGroup.setEnabled(true);
+			mMenuFinish.setEnabled(true);
+			
+		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case R.id.menu_play_next:
+				playNext();
+				return true;
+			case R.id.menu_finish:
+				finishExperiment();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -116,39 +139,73 @@ public class NappingActivity extends Activity implements StartVideoListener {
 	 */
 	private OnClickListener mButtonFinishListener = new OnClickListener() {
 		public void onClick(View v) {
-			mButtonFinish.setVisibility(View.GONE);
-			
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
-			String date = dateFormat.format(new Date());
-			
-			// create a screenshot
-			View activity = findViewById(R.id.layout_napping);
-			activity.setDrawingCacheEnabled(true);
-			Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
-			activity.setDrawingCacheEnabled(false);
-			File screenshotFile = IOUtil.saveScreenshot(bmp, mName, date);
-			
-			// export positions from the current view
-			File positionsFile = IOUtil.exportPositions(mVideoButtons, mName, date);
-			
-			// export configuration
-			File configurationFile = IOUtil.saveConfiguration(mName, date);
-			
-			// send the image per mail
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-			if (prefs.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
-				ArrayList<File> files = new ArrayList<File>();
-				files.add(configurationFile);
-				files.add(screenshotFile);
-				files.add(positionsFile);
-				IOUtil.sendFilePerMail(files, mName, v.getContext());				
-			}
-			
-			setResult(Activity.RESULT_OK);
-			finish();
+//			mButtonFinish.setVisibility(View.GONE);
+			finishExperiment();
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+//			String date = dateFormat.format(new Date());
+//			
+//			// create a screenshot
+//			View activity = findViewById(R.id.layout_napping);
+//			activity.setDrawingCacheEnabled(true);
+//			Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
+//			activity.setDrawingCacheEnabled(false);
+//			File screenshotFile = IOUtil.saveScreenshot(bmp, mName, date);
+//			
+//			// export positions from the current view
+//			File positionsFile = IOUtil.exportPositions(mVideoButtons, mName, date);
+//			
+//			// export configuration
+//			File configurationFile = IOUtil.saveConfiguration(mName, date);
+//			
+//			// send the image per mail
+//			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//			if (prefs.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
+//				ArrayList<File> files = new ArrayList<File>();
+//				files.add(configurationFile);
+//				files.add(screenshotFile);
+//				files.add(positionsFile);
+//				IOUtil.sendFilePerMail(files, mName, v.getContext());				
+//			}
+//			
+//			setResult(Activity.RESULT_OK);
+//			finish();
 		}
 	};
 
+	/**
+	 * Finishes the experiment and sends the data
+	 */
+	private void finishExperiment() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+		String date = dateFormat.format(new Date());
+		
+		// create a screenshot
+		View activity = findViewById(R.id.layout_napping);
+		activity.setDrawingCacheEnabled(true);
+		Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
+		activity.setDrawingCacheEnabled(false);
+		File screenshotFile = IOUtil.saveScreenshot(bmp, mName, date);
+		
+		// export positions from the current view
+		File positionsFile = IOUtil.exportPositions(mVideoButtons, mName, date);
+		
+		// export configuration
+		File configurationFile = IOUtil.saveConfiguration(mName, date);
+		
+		// send the image per mail
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		if (prefs.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
+			ArrayList<File> files = new ArrayList<File>();
+			files.add(configurationFile);
+			files.add(screenshotFile);
+			files.add(positionsFile);
+			IOUtil.sendFilePerMail(files, mName, this);				
+		}
+		
+		setResult(Activity.RESULT_OK);
+		finish();
+	}
+	
 	/**
 	 * Creates a button for a given video ID in the napping view
 	 */
@@ -199,6 +256,26 @@ public class NappingActivity extends Activity implements StartVideoListener {
 		} else if (requestCode == VIDEO_SINGLE_REQUEST) {
 			// do nothing
 		}
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    mMenuGroup  = menu.findItem(R.id.menu_group);
+	    mMenuFinish = menu.findItem(R.id.menu_finish);
+	    mMenuPlayNext = menu.findItem(R.id.menu_play_next);
+	    
+	    mMenuGroup.setEnabled(false);
+	    mMenuFinish.setEnabled(false);
+
+	    super.onPrepareOptionsMenu(menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.activity_napping, menu);
+	    return true;
 	}
 	
 	@Override
