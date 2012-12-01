@@ -18,7 +18,7 @@ import at.ac.univie.nappingplayer.util.Configuration;
 public class StartActivity extends Activity {
 	private static final String TAG = StartActivity.class.getSimpleName();
 	
-	EditText mEditText;
+	EditText mEditName;
 	
 	private static final int NAPPING_START_REQUEST = 0;
 
@@ -32,7 +32,7 @@ public class StartActivity extends Activity {
 		View v = findViewById(R.id.layout_start);
 		v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
 		
-		mEditText = (EditText) findViewById(R.id.et_person_name);
+		mEditName = (EditText) findViewById(R.id.et_person_name);
 		try {
 			// initialize SD card
 			Configuration.initialize(this);
@@ -84,6 +84,9 @@ public class StartActivity extends Activity {
 		case R.id.menu_settings:
 			startPreferences();
 			return true;
+		case R.id.menu_credits:
+			startCredits();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -95,7 +98,7 @@ public class StartActivity extends Activity {
 	 */
 	private void resetExperiment() {
 		VideoPlaylist.reset();
-		mEditText.setText("");
+		mEditName.setText("");
 	}
 	
 	/**
@@ -103,12 +106,12 @@ public class StartActivity extends Activity {
 	 */
 	public void startNapping(View view) {
 		Intent startNapping = new Intent(this, NappingActivity.class);
-		startNapping.putExtra("userName", mEditText.getText().toString());
-		if (mEditText.getText().toString().equals("")) {
-			Toast.makeText(this, getText(R.string.enter_name_prompt), Toast.LENGTH_SHORT).show();
-			mEditText.requestFocus();
-			return;
-		}
+		startNapping.putExtra("userName", mEditName.getText().toString());
+//		if (mEditName.getText().toString().equals("")) {
+//			Toast.makeText(this, getText(R.string.enter_name_prompt), Toast.LENGTH_SHORT).show();
+//			mEditName.requestFocus();
+//			return;
+//		}
 		startActivityForResult(startNapping, NAPPING_START_REQUEST);
 	}
 
@@ -121,4 +124,11 @@ public class StartActivity extends Activity {
 		Intent dataIntent = new Intent(this, DataExplorerActivity.class);
 		startActivity(dataIntent);
 	}
+	
+	public void startCredits() {
+		Intent creditsIntent = new Intent(this, CreditsActivity.class);
+		startActivity(creditsIntent);
+	}
+	
+	
 }

@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import at.ac.univie.nappingplayer.VideoPlaylist;
+import at.ac.univie.nappingplayer.grouping.VideoGroup;
 import at.ac.univie.nappingplayer.views.VideoButtonView;
 
 public abstract class IOUtil {
@@ -110,8 +111,7 @@ public abstract class IOUtil {
 								+ " with position " + button.getTop() + "/"
 								+ button.getLeft());
 				String sep = ";";
-				String videoName = VideoPlaylist.getVideo(button.getVideoId())
-						.toString();
+				String videoName = VideoPlaylist.getVideo(button.getVideoId()).toString();
 				String line = videoName + sep + button.getLeft() + sep
 						+ button.getTop();
 				bw.write(line);
@@ -136,6 +136,65 @@ public abstract class IOUtil {
 		return logFile;
 	}
 
+	/**
+	 * Saves the group associations to a file on the SD card
+	 *
+	 * @return A reference to the saved file
+	 */
+	public static File exportGroups(ArrayList<VideoGroup> groups, String name, String date) {
+		// TODO: 
+		Log.d(TAG, "Logging results for user " + name + " at " + date);
+		String logName = date + "-" + name + "-groups.csv";
+		File logFile = new File(Configuration.getLogFolder(), logName);
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		Log.d(TAG, "Trying to write to file " + logFile);
+		try {
+			logFile.createNewFile();
+			fw = new FileWriter(logFile);
+			bw = new BufferedWriter(fw);
+			for (VideoGroup group : groups) {
+				Log.d(TAG, "Writing group videos " + group.toString());
+				String sep = ";";
+				String groupName = group.toString(); 
+				String line = groupName + sep + "videos";
+				for (VideoButtonView v : group.getVideoButtons()) {
+					String videoName = VideoPlaylist.getVideo(v.getVideoId()).toString();
+					line += sep + videoName;
+				}
+				bw.write(line);
+				bw.newLine();
+			}
+			for (VideoGroup group : groups) {
+				Log.d(TAG, "Writing group keywords" + group.toString());
+				String sep = ";";
+				String groupName = group.toString(); 
+				String line = groupName + sep + "keywords";
+				for (String keyword : group.getKeywords()) {
+					line += sep + keyword;
+				}
+				bw.write(line);
+				bw.newLine();
+			}
+		} catch (IOException e) {
+			Log.e(TAG, "Couldn't write log file: " + e.toString());
+			e.printStackTrace();
+		} finally {
+			if ((fw != null) && (bw != null)) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch (IOException e) {
+					Log.e(TAG,
+							"Couldn't close file / buffered writer"
+									+ e.toString());
+					e.printStackTrace();
+				}
+			}
+		}
+		return logFile;
+	}
+	
 	/**
 	 * Saves the screenshot from a bitmap to a file on the SD card
 	 * 

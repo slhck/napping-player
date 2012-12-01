@@ -11,5 +11,10 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/menu_data"/>
-
+	<item
+	    android:id="@+id/menu_credits"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/menu_credits"/>
+	    />
 </menu>

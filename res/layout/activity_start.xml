@@ -14,6 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="95dp"
         android:onClick="startNapping"
+		android:icon="@android:drawable/ic_media_play"
         android:text="@string/start"
         android:textColor="#000000" />
 

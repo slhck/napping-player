@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+	
+    
     <item
         android:id="@+id/menu_play_next"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_media_play"
         android:title="@string/menu_play_next"/>
-    
-    <item
-        android:id="@+id/menu_group"
+
+	
+	<item
+        android:id="@+id/menu_edit_keywords"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_group"/>
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/menu_edit_keywords"
+    />
+    
+    <item
+        android:id="@+id/menu_create_group"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/menu_create_group"
+   	/>
+
+    
+    <item
+        android:id="@+id/menu_save_group"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/menu_save"
+    />
+    
+	<item
+        android:id="@+id/menu_delete_group"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/menu_delete"
+    />
     
     <item
         android:id="@+id/menu_finish"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_save"
         android:title="@string/menu_finish"/>
 	
 </menu>

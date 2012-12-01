@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Napping Player</string>
@@ -5,6 +6,9 @@
     <string name="title_activity_preferences">Preferences</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="dialog_unimplemented_header">Unavailable</string>
+    <string name="dialog_unimplemented_body">This is currently not implemented, sorry.</string>
 
     <!-- Start Activity -->
     <string name="welcome">Welcome to Napping Player!</string>
@@ -21,13 +25,21 @@
     <string name="click_play_to_start">Click \'Play Next Video\' to start!</string>
     <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' once you\'re done!</string>
     <string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
+    <string name="add_videos_to_group">Add videos to this group by tapping them.\nTap again to remove them.</string>
     <string name="finish">Finish!</string>
     <string name="dialog_close_header">Exit?</string>
     <string name="dialog_close_body">Do you really want to quit the experiment?</string>
+    <string name="dialog_finish_header">Finish?</string>
+    <string name="dialog_finish_body">You\'re about to finish the experiment. Are you sure?</string>
     <string name="menu_play_next">Play Next Video</string>
     <string name="menu_finish">Finish</string>
-	<string name="menu_group">Group Videos</string>
-    
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_edit_keywords">Edit Keywords</string>
+    <string name="menu_create_group">Add group</string>
+    <string name="no_groups_yet">No groups defined &#8230;</string>
+    <string name="group">Group</string>
+
     <!-- Prefs -->
     <string name="pref_cat_video">Video preferences</string>
     <string name="pref_cat_post_exp">Post-experiment options</string>
@@ -46,8 +58,12 @@
     <string name="log_files">Log Files</string>
     <string name="video_files">Video Files</string>
     <string name="dialog_clear_header">Delete all files?</string>
-    <string name="dialog_clear_body">Do you really want to delete all log files? This cannot be undone!</string>
+    <string name="dialog_clear_body">Do you really want to delete all log files?\nThis cannot be undone!</string>
     <string name="dialog_unknown_header">Unknown file</string>
     <string name="dialog_unknown_body">Cannot view this file type at the moment.</string>
-    
+    <string name="title_activity_credits">CreditsActivity</string>
+
+    <!-- Credits -->
+    <string name="menu_credits">About</string>
+    <string name="credits">NappingPlayer, written by Werner Robitza, University of Vienna.\nTo get in contact visit github.com/slhck/NappingPlayer.</string>
 </resources>
