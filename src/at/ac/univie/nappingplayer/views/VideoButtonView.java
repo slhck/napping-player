@@ -20,7 +20,6 @@ public class VideoButtonView extends android.widget.Button {
 	private static final int STATUS_BAR_HEIGHT 	= 35;
 	
 	private static final String COLOR_NEUTRAL  = "#AAAAAA";
-	private static final String COLOR_SELECTED = "#adff2f";
 	
 	private String mLabel;
 	private int mVideoId;
@@ -33,10 +32,11 @@ public class VideoButtonView extends android.widget.Button {
 	public VideoButtonView(Context context, int videoId) {
 		super(context);
 		this.setVideoId(videoId);
-		this.setLabel("  " + (getVideoId() + 1) + "  ");
+		this.setLabel(" " + (getVideoId() + 1) + " ");
 		super.setBackgroundColor(Color.parseColor(COLOR_NEUTRAL));
 		super.setText(getLabel());
 		super.setTextColor(Color.parseColor("#000000"));
+		
 		
 		setLayout();
 		addClickListeners();
@@ -126,8 +126,8 @@ public class VideoButtonView extends android.widget.Button {
 		});
 	}
 	
-	public void showAsSelected() {
-		super.setBackgroundColor(Color.parseColor(COLOR_SELECTED));
+	public void showAsSelected(String color) {
+		super.setBackgroundColor(Color.parseColor(color));
 		this.mSelected = true;
 	}
 	

@@ -26,6 +26,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import at.ac.univie.nappingplayer.grouping.SelectVideoListener;
 import at.ac.univie.nappingplayer.grouping.VideoGroup;
+import at.ac.univie.nappingplayer.grouping.VideoGroupAdapter;
 import at.ac.univie.nappingplayer.util.IOUtil;
 import at.ac.univie.nappingplayer.views.VideoButtonView;
 
@@ -39,6 +40,12 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	public static final int VIDEO_NEXT_REQUEST = 0;
 	public static final int VIDEO_SINGLE_REQUEST = 1;
 	
+	private static final int MODE_NAPPING = 0;
+	private static final int MODE_MOVING = 1;
+	private static final int MODE_GROUPING = 2;
+	
+	private int mMode;
+	
 	// napping session data
 	String mName;
 	int mCurrentVideoId;
@@ -46,6 +53,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	
 	// menu items 
 	MenuItem mMenuPlayNext;
+	MenuItem mMenuMoveMode;		
 	MenuItem mMenuCreateGroup;
 	MenuItem mMenuSaveGroup;
 	MenuItem mMenuDeleteGroup;
@@ -79,6 +87,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		Intent intent = getIntent();
 		mName = intent.getStringExtra("userName");
 		mVideoButtons = new ArrayList<VideoButtonView>();
+		
+		mMode = MODE_NAPPING;
 	}
 
 	@Override
@@ -100,8 +110,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	public void onResume() {
 		super.onResume();
 		Log.d(TAG, "onResume called");
-		// if we haven't stopped yet just get the current video ID (could be 0
-		// to start)
+		// if we haven't stopped yet just get the current video ID 
+		// (could be 0 to start)
 		if (VideoPlaylist.getState() != VideoPlaylist.STATE_FINISHED) {
 			if (VideoPlaylist.getState() != VideoPlaylist.STATE_INITIALIZED) {
 				showMessage(getText(R.string.drag_around));				
@@ -111,10 +121,15 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 			mCurrentVideoId = VideoPlaylist.getCurrentVideoId();
 			Log.d(TAG, "Setting current video ID to " + mCurrentVideoId);
 		} else {
-			// playlist has finished, we should probably disable the "play next" button
-			Log.d(TAG, "Playlist finished.");
-			showMessage(getText(R.string.seen_all));
-			initGroupingMenu();
+			// playlist has finished, we disable the "play next" button 
+			// and move on to grouping
+			if (mMode == MODE_NAPPING) {
+				Log.d(TAG, "Playlist finished.");
+				showMessage(getText(R.string.seen_all));
+				initGroupingMenu();				
+			} else {
+				// do nothing, we are already grouping
+			}
 		}
 	}
 	
@@ -134,7 +149,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 				addButtonForVideo(finishedId);
 			}
 		} else if (requestCode == VIDEO_SINGLE_REQUEST) {
-			// do nothing
+			// do nothing at the moment
 		}
 	}
 
@@ -157,18 +172,24 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		Log.d(TAG, "onPrepareOptionsMenu called");
 		
+		// assign all buttons for later
 		mMenuPlayNext 		= menu.findItem(R.id.menu_play_next);
 	    mMenuCreateGroup 	= menu.findItem(R.id.menu_create_group);
+	    mMenuMoveMode		= menu.findItem(R.id.menu_move_mode);
 		mMenuEditKeywords 	= menu.findItem(R.id.menu_edit_keywords);
 		mMenuSaveGroup		= menu.findItem(R.id.menu_save_group);
 		mMenuDeleteGroup	= menu.findItem(R.id.menu_delete_group);
 	    mMenuFinish 		= menu.findItem(R.id.menu_finish);
 	    
+	    // default visibilities for the napping taskitself
 	    mMenuPlayNext.setVisible(true);
 	    mMenuCreateGroup.setVisible(false);
+	    mMenuMoveMode.setVisible(false);
 	    mMenuEditKeywords.setVisible(false);
 	    mMenuSaveGroup.setVisible(false);
 	    mMenuDeleteGroup.setVisible(false);
+	    
+	    // show them that they can't finish yet
 	    mMenuFinish.setVisible(true);
 	    mMenuFinish.setEnabled(false);
 	
@@ -183,15 +204,26 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.menu_play_next:
+				// play then next video from the playlist
 				playNextVideo();
 				return true;
 			case R.id.menu_finish:
+				// finish the experiment
 				confirmFinish();
 				return true;
 			case R.id.menu_create_group:
+				// create a new group for videos
 				createNewGroup();
 				return true;
+			case R.id.menu_move_mode:
+				// if we are in move mode, switch to grouping, else vice-versa
+				if (mMode == MODE_MOVING)
+					enableGroupingMode();
+				else if (mMode == MODE_GROUPING)
+					enableNappingMode();
+				return true;
 			case R.id.menu_edit_keywords:
+				// show the keyword editor to the user
 				showKeywordEditor();
 			default:
 				return super.onOptionsItemSelected(item);
@@ -316,12 +348,14 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	 */
 	private void initGroupingMenu() {
 		Log.d(TAG, "initGroupingMenu called");
-		// remove obsolete buttons
+		
+		// set new visibilities for grouping mode
 		mMenuPlayNext.setVisible(false);
+		mMenuMoveMode.setVisible(false);
 		mMenuCreateGroup.setVisible(true);
 		mMenuEditKeywords.setVisible(false);
 		mMenuEditKeywords.setEnabled(false);
-		mMenuSaveGroup.setVisible(false); // TODO question is if we really want that or just save right away
+		mMenuSaveGroup.setVisible(false); // TODO question is; do we really want that or just save right away?
 		mMenuSaveGroup.setEnabled(false);
 		mMenuDeleteGroup.setVisible(false); // TODO maybe later, not now!
 		mMenuDeleteGroup.setEnabled(false);
@@ -333,7 +367,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	    getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 	    
 	    mVideoGroups 	= new ArrayList<VideoGroup>();
-	    mSpinnerAdapter = new ArrayAdapter<VideoGroup>(this, android.R.layout.simple_spinner_dropdown_item, mVideoGroups);
+	    //mSpinnerAdapter = new ArrayAdapter<VideoGroup>(this, android.R.layout.simple_spinner_dropdown_item, mVideoGroups);
+	    mSpinnerAdapter = new VideoGroupAdapter(this, android.R.layout.simple_spinner_dropdown_item, mVideoGroups);
 	    mOnNavigationListener = new OnNavigationListener() {
 	    	  @Override
 	    	  public boolean onNavigationItemSelected(int position, long itemId) {
@@ -347,14 +382,15 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	    		  
 	    		  VideoGroup selectedGroup = mVideoGroups.get(position);
 	    		  mCurrentVideoGroup = selectedGroup;
-	    		  Log.d(TAG, "Video group with id " + selectedGroup.getId() + " selected");
+	    		  Log.d(TAG, "Video group with id " + mCurrentVideoGroup.getId() + " selected");
+	    		  
 	    		  // deselect all videos first
 	    		  for (VideoButtonView btn : mVideoButtons) {
 	    			  btn.showAsDeselected();
 	    		  }
 	    		  // select all contained videos
 	    		  for (VideoButtonView selectedBtn : mCurrentVideoGroup.getVideoButtons()) {
-	    			  selectedBtn.showAsSelected();
+	    			  selectedBtn.showAsSelected(mCurrentVideoGroup.getColor());
 	    		  }
 	    		  
 	    		  return true;
@@ -376,16 +412,12 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		Log.d(TAG, "Creating new group with id " + group.getId());
 		
 		// update the dropdown menu
-		mSpinnerAdapter = new ArrayAdapter<VideoGroup>(this, android.R.layout.simple_spinner_dropdown_item, mVideoGroups);
+		//mSpinnerAdapter = new ArrayAdapter<VideoGroup>(this, android.R.layout.simple_spinner_dropdown_item, mVideoGroups);
+	    mSpinnerAdapter = new VideoGroupAdapter(this, android.R.layout.simple_spinner_dropdown_item, mVideoGroups);
 		getActionBar().setListNavigationCallbacks(mSpinnerAdapter, mOnNavigationListener);
 		
 		// select the right dropdown option
 		getActionBar().setSelectedNavigationItem(mVideoGroups.indexOf(group));
-		
-		// enable the buttons
-		mMenuSaveGroup.setEnabled(true);
-		mMenuDeleteGroup.setEnabled(true);
-		mMenuEditKeywords.setEnabled(true);
 		
 		// enable grouping mode
 		enableGroupingMode();
@@ -411,6 +443,13 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		for (VideoButtonView v : mVideoButtons) {
 			v.setMode(VideoButtonView.MODE_GROUP);
 		}
+		// enable the buttons
+		mMenuSaveGroup.setEnabled(true);
+		mMenuDeleteGroup.setEnabled(true);
+		mMenuEditKeywords.setEnabled(true);
+		mMenuMoveMode.setVisible(true);
+		mMenuMoveMode.setTitle(getText(R.string.menu_move_mode));
+		mMode = MODE_GROUPING;
 	}
 	
 	/**
@@ -420,6 +459,13 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		for (VideoButtonView v : mVideoButtons) {
 			v.setMode(VideoButtonView.MODE_MOVE);
 		}
+		// disable the buttons
+		mMenuSaveGroup.setEnabled(false);
+		mMenuDeleteGroup.setEnabled(false);
+		mMenuEditKeywords.setEnabled(false);
+		mMenuMoveMode.setVisible(true);
+		mMenuMoveMode.setTitle(getText(R.string.menu_group_mode));		
+		mMode = MODE_MOVING;
 	}
 	
 	/**
@@ -433,11 +479,11 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	@Override
 	public void onSelectVideoRequest(VideoButtonView btn) {
 		if (btn.isSelected()) {
-			btn.showAsDeselected();
 			mCurrentVideoGroup.removeVideo(btn);
+			btn.showAsDeselected();
 		} else {
-			btn.showAsSelected();
 			mCurrentVideoGroup.addVideo(btn);
+			btn.showAsSelected(mCurrentVideoGroup.getColor());
 		}
 	}
 

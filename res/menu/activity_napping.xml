@@ -10,6 +10,12 @@
         android:icon="@android:drawable/ic_media_play"
         android:title="@string/menu_play_next"/>
 
+    <item
+        android:id="@+id/menu_move_mode"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="@string/menu_move_mode"/>
 	
 	<item
         android:id="@+id/menu_edit_keywords"

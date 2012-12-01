@@ -35,9 +35,10 @@
     <string name="menu_finish">Finish</string>
     <string name="menu_save">Save</string>
     <string name="menu_delete">Delete</string>
+    <string name="menu_move_mode">Move Cards</string>
+    <string name="menu_group_mode">Group Cards</string>
     <string name="menu_edit_keywords">Edit Keywords</string>
-    <string name="menu_create_group">Add group</string>
-    <string name="no_groups_yet">No groups defined &#8230;</string>
+    <string name="menu_create_group">Create new Group</string>
     <string name="group">Group</string>
 
     <!-- Prefs -->

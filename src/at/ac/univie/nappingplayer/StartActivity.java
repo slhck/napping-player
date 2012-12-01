@@ -107,11 +107,11 @@ public class StartActivity extends Activity {
 	public void startNapping(View view) {
 		Intent startNapping = new Intent(this, NappingActivity.class);
 		startNapping.putExtra("userName", mEditName.getText().toString());
-//		if (mEditName.getText().toString().equals("")) {
-//			Toast.makeText(this, getText(R.string.enter_name_prompt), Toast.LENGTH_SHORT).show();
-//			mEditName.requestFocus();
-//			return;
-//		}
+		if (mEditName.getText().toString().equals("")) {
+			Toast.makeText(this, getText(R.string.enter_name_prompt), Toast.LENGTH_SHORT).show();
+			mEditName.requestFocus();
+			return;
+		}
 		startActivityForResult(startNapping, NAPPING_START_REQUEST);
 	}
 
