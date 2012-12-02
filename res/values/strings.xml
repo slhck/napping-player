@@ -22,8 +22,8 @@
 
     <!-- Napping Activity -->
     <string name="play_next_video">Play Next Video!</string>
-    <string name="click_play_to_start">Click \'Play Next Video\' to start!</string>
-    <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' once you\'re done!</string>
+    <string name="click_play_to_start">Click \'Play Next\' to start!</string>
+    <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' when you\'re done!</string>
     <string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
     <string name="add_videos_to_group">Add videos to this group by tapping them.\nTap again to remove them.</string>
     <string name="finish">Finish!</string>
@@ -31,14 +31,14 @@
     <string name="dialog_close_body">Do you really want to quit the experiment?</string>
     <string name="dialog_finish_header">Finish?</string>
     <string name="dialog_finish_body">You\'re about to finish the experiment. Are you sure?</string>
-    <string name="menu_play_next">Play Next Video</string>
+    <string name="menu_play_next">Play Next</string>
     <string name="menu_finish">Finish</string>
     <string name="menu_save">Save</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_move_mode">Move Cards</string>
     <string name="menu_group_mode">Group Cards</string>
     <string name="menu_edit_keywords">Edit Keywords</string>
-    <string name="menu_create_group">Create new Group</string>
+    <string name="menu_create_group">Create Group</string>
     <string name="group">Group</string>
 
     <!-- Prefs -->

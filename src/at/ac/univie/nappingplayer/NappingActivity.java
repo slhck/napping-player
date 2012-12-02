@@ -188,11 +188,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	    mMenuEditKeywords.setVisible(false);
 	    mMenuSaveGroup.setVisible(false);
 	    mMenuDeleteGroup.setVisible(false);
+	    mMenuFinish.setVisible(false);
 	    
-	    // show them that they can't finish yet
-	    mMenuFinish.setVisible(true);
-	    mMenuFinish.setEnabled(false);
-	
 	    super.onPrepareOptionsMenu(menu);
 	    return true;
 	}
@@ -351,15 +348,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		
 		// set new visibilities for grouping mode
 		mMenuPlayNext.setVisible(false);
-		mMenuMoveMode.setVisible(false);
 		mMenuCreateGroup.setVisible(true);
-		mMenuEditKeywords.setVisible(false);
-		mMenuEditKeywords.setEnabled(false);
-		mMenuSaveGroup.setVisible(false); // TODO question is; do we really want that or just save right away?
-		mMenuSaveGroup.setEnabled(false);
-		mMenuDeleteGroup.setVisible(false); // TODO maybe later, not now!
-		mMenuDeleteGroup.setEnabled(false);
-		mMenuFinish.setEnabled(false);
 		
 	    // Action Bar setup
 	    getActionBar().setDisplayShowHomeEnabled(false);
@@ -372,12 +361,13 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	    mOnNavigationListener = new OnNavigationListener() {
 	    	  @Override
 	    	  public boolean onNavigationItemSelected(int position, long itemId) {
-	    		  showMessage(getText(R.string.add_videos_to_group));
+	    		  //showMessage(getText(R.string.add_videos_to_group));
 	    		  
 	    		  // enable the user to edit keywords and finish 
 	    		  // if they are able to select a group, they can edit keywords and they could be done
 	    		  mMenuEditKeywords.setVisible(true);
 	    		  mMenuEditKeywords.setEnabled(true);
+	    		  mMenuFinish.setVisible(true);
 	    		  mMenuFinish.setEnabled(true);
 	    		  
 	    		  VideoGroup selectedGroup = mVideoGroups.get(position);
@@ -444,6 +434,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 			v.setMode(VideoButtonView.MODE_GROUP);
 		}
 		// enable the buttons
+		mMenuCreateGroup.setEnabled(true);
 		mMenuSaveGroup.setEnabled(true);
 		mMenuDeleteGroup.setEnabled(true);
 		mMenuEditKeywords.setEnabled(true);
@@ -460,6 +451,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 			v.setMode(VideoButtonView.MODE_MOVE);
 		}
 		// disable the buttons
+		mMenuCreateGroup.setEnabled(false);
 		mMenuSaveGroup.setEnabled(false);
 		mMenuDeleteGroup.setEnabled(false);
 		mMenuEditKeywords.setEnabled(false);

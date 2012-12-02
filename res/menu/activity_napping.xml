@@ -6,21 +6,21 @@
     <item
         android:id="@+id/menu_play_next"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_media_play"
         android:title="@string/menu_play_next"/>
 
     <item
         android:id="@+id/menu_move_mode"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_menu_compass"
         android:title="@string/menu_move_mode"/>
 	
 	<item
         android:id="@+id/menu_edit_keywords"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/menu_edit_keywords"
     />
@@ -28,7 +28,7 @@
     <item
         android:id="@+id/menu_create_group"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/menu_create_group"
    	/>
@@ -37,7 +37,7 @@
     <item
         android:id="@+id/menu_save_group"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/menu_save"
     />
@@ -45,7 +45,7 @@
 	<item
         android:id="@+id/menu_delete_group"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/menu_delete"
     />
@@ -53,7 +53,7 @@
     <item
         android:id="@+id/menu_finish"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/menu_finish"/>
 	
