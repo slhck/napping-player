@@ -20,7 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -440,12 +440,33 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	 * Shows a keyword editor to the user
 	 */
 	private void showKeywordEditor() {
-		// TODO: implement this
+		final EditText input = new EditText(this);
+		input.setId(mCurrentVideoGroup.getId());
+		input.setText(mCurrentVideoGroup.getKeywordsAsString());
+		input.setSelection(input.getText().length());
+		
 		new AlertDialog.Builder(this)
-        .setIcon(android.R.drawable.ic_dialog_alert)
-        .setTitle(getText(R.string.dialog_unimplemented_header))
-        .setMessage(getText(R.string.dialog_unimplemented_body))
-        .setPositiveButton(getText(R.string.ok), null)
+		.setTitle(getString(R.string.dialog_edit_keywords_title))
+        .setMessage(getString(R.string.dialog_edit_keywords_body))
+        .setView(input)
+		.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+        	@Override
+            public void onClick(DialogInterface dialog, int position) {
+                String value = input.getText().toString();
+                Log.d(TAG, "Attributes: " + value);
+                for (String keyword : value.split(",")) {
+                	mCurrentVideoGroup.addKeyword(keyword);                	
+                }
+                return;
+            }
+        })        
+        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        	@Override
+            public void onClick(DialogInterface dialog, int position) {
+                input.setText("");
+                return;
+            }
+        })
         .show();
 	}
 	

@@ -48,8 +48,16 @@ public class VideoGroup {
 		this.mColor = getColorForId(id);
 	}
 	
+	/**
+	 * Adds a keyword to this VideoGroup
+	 */
 	public void addKeyword(String keyword) {
-		this.mKeywords.add(keyword);
+		// strip leading and trailing whitespace
+		keyword = keyword.trim();
+		// check if list doesn't already contain string
+		if (!mKeywords.contains(keyword)) {
+			this.mKeywords.add(keyword);			
+		}
 	}
 	
 	public ArrayList<String> getKeywords() {
@@ -58,6 +66,19 @@ public class VideoGroup {
 	
 	public void removeKeyword(String keyword) {
 		this.mKeywords.remove(keyword);
+	}
+	
+	public String getKeywordsAsString() {
+		String ret = "";
+		if (mKeywords.isEmpty()) {
+			return "";
+		} else {
+			for (String keyword : mKeywords) {
+				ret += keyword;
+				ret += ", ";
+			}
+			return ret;			
+		}
 	}
 	
 	public void addVideo(VideoButtonView video) {
@@ -92,6 +113,7 @@ public class VideoGroup {
 			return COLOR_ARRAY[0]; // safeguard for when ID is too high
 		}
 	}
+
 	
 	/**
 	 * Textual representation of the group for the navigation menu
@@ -101,4 +123,5 @@ public class VideoGroup {
 		String gp = (String) mContext.getString(R.string.group);
 		return gp + " " + (this.id + 1);
 	}
+
 }

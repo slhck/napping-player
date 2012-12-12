@@ -7,6 +7,7 @@
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
     <string name="dialog_unimplemented_header">Nicht verfügbar</string>
     <string name="dialog_unimplemented_body">Diese Funktion ist noch nicht implementiert.</string>
 
@@ -41,6 +42,8 @@
     <string name="menu_edit_keywords">Attribute bearbeiten</string>
     <string name="menu_create_group">Gruppe erstellen</string>
     <string name="group">Gruppe</string>
+    <string name="dialog_edit_keywords_title">Attribute bearbeiten</string>
+    <string name="dialog_edit_keywords_body">Bearbeiten Sie die Attribute für diese Gruppe. Setzen Sie ein Komma (\',\') zwischen die Attribute.</string>
 
     <!-- Prefs -->
     <string name="pref_cat_video">Video-Einstellungen</string>

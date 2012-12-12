@@ -7,6 +7,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="dialog_unimplemented_header">Unavailable</string>
     <string name="dialog_unimplemented_body">This is currently not implemented, sorry.</string>
 
@@ -41,6 +42,8 @@
     <string name="menu_edit_keywords">Edit Keywords</string>
     <string name="menu_create_group">Create Group</string>
     <string name="group">Group</string>
+    <string name="dialog_edit_keywords_title">Edit Keywords</string>
+    <string name="dialog_edit_keywords_body">Edit the keywords for this group. Separate keywords by a comma (\',\').</string>
 
     <!-- Prefs -->
     <string name="pref_cat_video">Video preferences</string>

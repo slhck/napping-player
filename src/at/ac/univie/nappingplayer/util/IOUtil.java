@@ -24,7 +24,7 @@ import at.ac.univie.nappingplayer.views.VideoButtonView;
 
 public abstract class IOUtil {
 	private static final String TAG = IOUtil.class.getSimpleName();
-	// private static final String[] RECV_MAIL = { "entertainment.computing@gmail.com" };
+	private static final String SEP = ",";
 
 	/**
 	 * Inverts a bitmap's colors
@@ -63,13 +63,13 @@ public abstract class IOUtil {
 			configurationFile.createNewFile();
 			fw = new FileWriter(configurationFile);
 			bw = new BufferedWriter(fw);
-			bw.write("name," + name);
+			bw.write("name" + SEP + name);
 			bw.newLine();
-			bw.write("screen-width," + Configuration.getWidth());
+			bw.write("screen-width"  + SEP + Configuration.getWidth());
 			bw.newLine();
-			bw.write("screen-height," + Configuration.getHeight());
+			bw.write("screen-height"  + SEP + Configuration.getHeight());
 			bw.newLine();
-			bw.write("release," + Build.VERSION.RELEASE);
+			bw.write("release"  + SEP + Build.VERSION.RELEASE);
 			bw.newLine();
 		} catch (IOException e) {
 			Log.e(TAG, "Couldn't write log file: " + e.toString());
@@ -110,9 +110,8 @@ public abstract class IOUtil {
 						"Writing button " + button.getLabel()
 								+ " with position " + button.getTop() + "/"
 								+ button.getLeft());
-				String sep = ";";
 				String videoName = VideoPlaylist.getVideo(button.getVideoId()).toString();
-				String line = videoName + sep + button.getLeft() + sep
+				String line = videoName + SEP + button.getLeft() + SEP
 						+ button.getTop();
 				bw.write(line);
 				bw.newLine();
@@ -155,23 +154,21 @@ public abstract class IOUtil {
 			bw = new BufferedWriter(fw);
 			for (VideoGroup group : groups) {
 				Log.d(TAG, "Writing group videos " + group.toString());
-				String sep = ";";
 				String groupName = group.toString(); 
-				String line = groupName + sep + "videos";
+				String line = groupName + SEP + "videos";
 				for (VideoButtonView v : group.getVideoButtons()) {
 					String videoName = VideoPlaylist.getVideo(v.getVideoId()).toString();
-					line += sep + videoName;
+					line += SEP + videoName;
 				}
 				bw.write(line);
 				bw.newLine();
 			}
 			for (VideoGroup group : groups) {
 				Log.d(TAG, "Writing group keywords" + group.toString());
-				String sep = ";";
 				String groupName = group.toString(); 
-				String line = groupName + sep + "keywords";
+				String line = groupName + SEP + "keywords";
 				for (String keyword : group.getKeywords()) {
-					line += sep + keyword;
+					line += SEP + keyword;
 				}
 				bw.write(line);
 				bw.newLine();
@@ -262,6 +259,7 @@ public abstract class IOUtil {
 				text.append(line);
 				text.append('\n');
 			}
+			br.close();
 		} catch (IOException e) {
 			Log.e(TAG, "Error while reading file " + f + ": " + e.toString());
 		}
