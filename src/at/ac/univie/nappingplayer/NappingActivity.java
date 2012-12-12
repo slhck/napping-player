@@ -235,6 +235,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 			case R.id.menu_edit_keywords:
 				// show the keyword editor to the user
 				showKeywordEditor();
+				return true;
 			case R.id.menu_finish:
 				// finish the experiment
 				confirmAndFinish();

@@ -143,7 +143,7 @@ OnErrorListener{
 		setResult(Activity.RESULT_OK, resultData);
 		finish();
 	}
-
+	
 	//Starts video after showing Video ID
 	public void delayedStartVideo(){
 		videoIDview.bringToFront();

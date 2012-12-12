@@ -21,9 +21,9 @@
     <string name="canceled_napping">You\'ve canceled this experiment.</string>
 
     <!-- Napping Activity -->
-    <string name="play_next_video">Play Next Video!</string>
+    <string name="play_next_video">Play Next</string>
     <string name="click_play_to_start">Click \'Play Next\' to start!</string>
-    <string name="drag_around">Drag the video around to position it.\nClick \'Play Next Video\' when you\'re done!</string>
+    <string name="drag_around">Drag the video around to position it.\nClick \'Play Next\' when you\'re done!</string>
     <string name="seen_all">You\'ve seen all videos. Now please arrange them!\nClick on a video to see it again.</string>
     <string name="add_videos_to_group">Add videos to this group by tapping them.\nTap again to remove them.</string>
     <string name="finish">Finish!</string>
@@ -71,9 +71,9 @@
     <string name="dialog_clear_body">Do you really want to delete all log files?\nThis cannot be undone!</string>
     <string name="dialog_unknown_header">Unknown file</string>
     <string name="dialog_unknown_body">Cannot view this file type at the moment.</string>
-    <string name="title_activity_credits">CreditsActivity</string>
 
     <!-- Credits -->
+    <string name="title_activity_credits">About</string>
     <string name="menu_credits">About</string>
     <string name="credits">NappingPlayer, written by Werner Robitza, University of Vienna.\nTo get in contact visit github.com/slhck/NappingPlayer.</string>
 </resources>

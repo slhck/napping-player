@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<string-array name="list_scale_array">
+    <item>Originalgröße</item>
+    <item>Auf Breite skalieren</item>
+    <item>Vollbildmodus</item>
+</string-array>
+<string-array name="list_scale_values">
+    <item>original</item>
+    <item>scale</item>
+    <item>full</item>
+</string-array>
+
+
+</resources>

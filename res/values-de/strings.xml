@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Napping Player</string>
+    <string name="title_activity_start">Willkommen beim Napping Player!</string>
+    <string name="title_activity_preferences">Einstellungen</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="ok">OK</string>
+    <string name="dialog_unimplemented_header">Nicht verfügbar</string>
+    <string name="dialog_unimplemented_body">Diese Funktion ist noch nicht implementiert.</string>
+
+    <!-- Start Activity -->
+    <string name="welcome">Willkommen beim Napping Player!</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_data">Experiment-Daten</string>
+    <string name="start">Napping beginnen!</string>
+    <string name="enter_name">Wie heißen Sie?</string>
+    <string name="enter_name_prompt">Sie müssen einen Namen eingeben!</string>
+    <string name="finished_napping">Sie sind fertig. Bitte geben Sie das Tablet zurück.</string>
+    <string name="canceled_napping">Sie haben das Experiment abgebrochen.</string>
+
+    <!-- Napping Activity -->
+    <string name="play_next_video">Nächstes Video</string>
+    <string name="click_play_to_start">Klicken Sie \'Nächstes Video\' um zu beginnen!</string>
+    <string name="drag_around">Ziehen Sie das Video zum Positionieren herum.\nKlicken Sie \'Nächstes Video\' wenn Sie fertig sind!</string>
+    <string name="seen_all">Sie haben alle Videos gesehen. Bitte arrangieren Sie sie nun!\nKlicken Sie auf ein Video um es erneut zu sehen.</string>
+    <string name="add_videos_to_group">Klicken Sie auf ein Video um es zur Gruppe hinzuzufügen.\nKlicken Sie erneut um es zu entfernen.</string>
+    <string name="finish">Fertig!</string>
+    <string name="dialog_close_header">Abbrechen?</string>
+    <string name="dialog_close_body">Möchten Sie wirklich das Experiment abbrechen?</string>
+    <string name="dialog_finish_header">Beenden?</string>
+    <string name="dialog_finish_body">Sie sind dabei das Experiment zu beenden. Sind sie sicher?</string>
+    <string name="menu_play_next">Nächstes Video</string>
+    <string name="menu_finish_napping">Fertig</string>
+    <string name="menu_finish">Fertig</string>
+    <string name="menu_save">Speichern</string>
+    <string name="menu_delete">Löschen</string>
+    <string name="menu_move_mode">Videos bewegen</string>
+    <string name="menu_group_mode">Videos gruppieren</string>
+    <string name="menu_edit_keywords">Attribute bearbeiten</string>
+    <string name="menu_create_group">Gruppe erstellen</string>
+    <string name="group">Gruppe</string>
+
+    <!-- Prefs -->
+    <string name="pref_cat_video">Video-Einstellungen</string>
+    <string name="pref_cat_post_exp">Post-Experiment Einstellungen</string>
+    <string name="pref_cat_in_exp">Experiment-Einstellungen</string>
+    <string name="list_scale_title">Anzeigemodus</string>
+    <string name="list_scale_summary">Wie soll das Video angezeigt werden?</string>
+    <string name="video_start_title">Start-Verzögerung</string>
+    <string name="video_start_summary">Wie lange in Millisekunden bis ein Video startet?</string>
+    <string name="send_email_title">Resultate als Mail senden</string>
+    <string name="send_email_summary_active">Sende eine Mail mit den Resultaten wenn das Experiment beendet ist</string>
+    <string name="send_email_summary_inactive">Sende keine Mail mit den Resultaten wenn das Experiment beendet ist</string>
+    <string name="send_email_address_title">Empfänger-Adresse</string>
+    <string name="send_email_address_summary">Zu welcher Adresse sollen die Mails geschickt werden?</string>
+    <string name="enable_grouping_title">Gruppieren erlauben</string>
+    <string name="enable_grouping_summary_active">Videos können gruppiert werden nachdem das Arrangieren beendet ist</string>
+    <string name="enable_grouping_summary_inactive">Videos können nicht gruppiert werden nachdem das Arrangieren beendet ist</string>
+    <string name="enable_movement_title">Bewegen erlauben</string>
+    <string name="enable_movement_summary_active">Videos können während der Gruppierung bewegt werden</string>
+    <string name="enable_movement_summary_inactive">Videos können während der Gruppierung nicht bewegt werden</string>
+
+    <!-- Data Explorer -->
+    <string name="title_activity_data_explorer">Experiment-Daten</string>
+    <string name="menu_clear">Alle Daten löschen</string>
+    <string name="log_files">Log-Dateien</string>
+    <string name="video_files">Videos</string>
+    <string name="dialog_clear_header">Alle Dateien löschen?</string>
+    <string name="dialog_clear_body">Möchten Sie wirklich alle Log-Dateien löschen?\nDies kann nicht rückgängig gemacht werden!</string>
+    <string name="dialog_unknown_header">Unbekannter Dateityp</string>
+    <string name="dialog_unknown_body">Diese Datei kann zur Zeit nicht angezeigt werden</string>
+
+    <!-- Credits -->
+    <string name="title_activity_credits">Über</string>
+    <string name="menu_credits">Über</string>
+    <string name="credits">NappingPlayer, geschrieben von Werner Robitza, Universität Wien.\Für Kontaktinformationen: github.com/slhck/NappingPlayer.</string>
+</resources>
