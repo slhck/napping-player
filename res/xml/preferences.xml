@@ -17,13 +17,35 @@
         android:title="@string/video_start_title" />    
 </PreferenceCategory>
 <PreferenceCategory 
+   	android:title="@string/pref_cat_in_exp">
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="enable_grouping"
+        android:summaryOff="@string/enable_grouping_summary_inactive"
+        android:summaryOn="@string/enable_grouping_summary_active"
+        android:title="@string/enable_grouping_title"
+        />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="enable_movement"
+        android:summaryOff="@string/enable_movement_summary_inactive"
+        android:summaryOn="@string/enable_movement_summary_active"
+        android:title="@string/enable_movement_title"
+        />
+</PreferenceCategory>
+<PreferenceCategory 
     android:title="@string/pref_cat_post_exp">
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="send_email"
         android:summaryOff="@string/send_email_summary_inactive"
         android:summaryOn="@string/send_email_summary_active"
-        android:title="@string/send_email_title" />    
+        android:title="@string/send_email_title" />
+    <EditTextPreference
+        android:defaultValue="entertainment.computing@gmail.com"
+        android:key="send_email_address"
+        android:summary="@string/send_email_address_summary"
+        android:title="@string/send_email_address_title" />        
 </PreferenceCategory>
 
 </PreferenceScreen>

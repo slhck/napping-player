@@ -43,7 +43,7 @@ OnErrorListener{
 	private SurfaceView mPlayView;
 	private SurfaceHolder mHolder;
 	
-	private SharedPreferences prefs;
+	private SharedPreferences mSharedPreferences;
 	
 	int mVideoId;
 	int pauseduration;
@@ -55,7 +55,7 @@ OnErrorListener{
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.showvideo);
         
-        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         
         View v = findViewById(R.id.layout_video);
         v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
@@ -147,7 +147,7 @@ OnErrorListener{
 	//Starts video after showing Video ID
 	public void delayedStartVideo(){
 		videoIDview.bringToFront();
-		long delay = Integer.parseInt(prefs.getString(PreferencesActivity.VIDEO_START_DELAY, "1000"));
+		long delay = Integer.parseInt(mSharedPreferences.getString(PreferencesActivity.VIDEO_START_DELAY, "1000"));
 		SystemClock.sleep(delay);
 		videoIDview.setVisibility(View.INVISIBLE);
 		mPlayer.start();
@@ -193,7 +193,7 @@ OnErrorListener{
 		    
 		    
 		    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		    String displaySetting = prefs.getString(PreferencesActivity.LIST_SCALE, "");
+		    String displaySetting = mSharedPreferences.getString(PreferencesActivity.LIST_SCALE, "");
 		    
 		    if (displaySetting.equalsIgnoreCase("original")) {
 		    	// original size

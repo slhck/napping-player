@@ -32,6 +32,7 @@
     <string name="dialog_finish_header">Finish?</string>
     <string name="dialog_finish_body">You\'re about to finish the experiment. Are you sure?</string>
     <string name="menu_play_next">Play Next</string>
+    <string name="menu_finish_napping">Finish</string>
     <string name="menu_finish">Finish</string>
     <string name="menu_save">Save</string>
     <string name="menu_delete">Delete</string>
@@ -44,14 +45,22 @@
     <!-- Prefs -->
     <string name="pref_cat_video">Video preferences</string>
     <string name="pref_cat_post_exp">Post-experiment options</string>
+    <string name="pref_cat_in_exp">Experiment options</string>
     <string name="list_scale_title">Display mode</string>
     <string name="list_scale_summary">How should the video be displayed?</string>
     <string name="video_start_title">Video start delay</string>
     <string name="video_start_summary">How long in milliseconds the video title is shown?</string>
     <string name="send_email_title">Send results as email</string>
-    <string name="send_email_summary_active">Emails are sent after an experiment is finished</string>
-    <string name="send_email_summary_inactive">No email is sent after an experiment is finished</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="send_email_summary_active">Send e-mail after an experiment is finished</string>
+    <string name="send_email_summary_inactive">Don\'t send e-mail after an experiment is finished</string>
+    <string name="send_email_address_title">Recipient address</string>
+    <string name="send_email_address_summary">Which e-mail address should the mails be sent to?</string>
+    <string name="enable_grouping_title">Enable grouping</string>
+    <string name="enable_grouping_summary_active">Videos can be grouped after they\'re all played</string>
+    <string name="enable_grouping_summary_inactive">Videos can not be grouped after they\'re all played</string>
+    <string name="enable_movement_title">Enable movement</string>
+    <string name="enable_movement_summary_active">Videos can be moved while in grouping mode</string>
+    <string name="enable_movement_summary_inactive">Videos can not be moved while in grouping mode</string>
 
     <!-- Data Explorer -->
     <string name="title_activity_data_explorer">Experiment Data</string>

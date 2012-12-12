@@ -24,7 +24,7 @@ import at.ac.univie.nappingplayer.views.VideoButtonView;
 
 public abstract class IOUtil {
 	private static final String TAG = IOUtil.class.getSimpleName();
-	private static final String[] RECV_MAIL = { "entertainment.computing@gmail.com" };
+	// private static final String[] RECV_MAIL = { "entertainment.computing@gmail.com" };
 
 	/**
 	 * Inverts a bitmap's colors
@@ -220,23 +220,31 @@ public abstract class IOUtil {
 	}
 
 	/**
-	 * Sends the passed file per mail
+	 * Sends a number of files per mail to a specified address
+	 * @param recipient The e-mail address of the recipient
+	 * @param files An ArrayList of files
+	 * @param name The name of the observer
+	 * @param context The activity context
 	 */
-	public static void sendFilePerMail(ArrayList<File> files, String name,
-			Context context) {
+	public static void sendFilePerMail(String recipient, ArrayList<File> files, String name, Context context) {
 		Log.d(TAG, "Sending e-mail for user " + name);
+		
 		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+		
 		emailIntent.setType("plain/text");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
-				"Napping Activity Result from " + name);
-		emailIntent.putExtra(Intent.EXTRA_TEXT, "Napping Activity Result from "
-				+ name);
-		emailIntent.putExtra(Intent.EXTRA_EMAIL, RECV_MAIL);
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Napping Activity Result from " + name);
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "Napping Activity Result from " + name);
+		
+		String[] recipientArray = new String[1];
+		recipientArray[0] = recipient;
+		emailIntent.putExtra(Intent.EXTRA_EMAIL, recipientArray);
+		
 		// merge all files into one list of URIs
 		ArrayList<Uri> uris = new ArrayList<Uri>();
 		for (File f : files) {
 			uris.add(Uri.parse("file://" + f.toString()));
 		}
+		
 		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 		context.startActivity(emailIntent);
 	}

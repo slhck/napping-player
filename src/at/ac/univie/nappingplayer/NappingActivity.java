@@ -46,6 +46,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	
 	private int mMode;
 	
+	private SharedPreferences mSharedPreferences;
+	
 	// napping session data
 	String mName;
 	int mCurrentVideoId;
@@ -53,7 +55,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	
 	// menu items 
 	MenuItem mMenuPlayNext;
-	MenuItem mMenuMoveMode;		
+	MenuItem mMenuMoveMode;	
+	MenuItem mMenuFinishNapping;
 	MenuItem mMenuCreateGroup;
 	MenuItem mMenuSaveGroup;
 	MenuItem mMenuDeleteGroup;
@@ -75,6 +78,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_napping);
+		
+		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		
 		// Layout options
 		View v = findViewById(R.id.layout_napping);
@@ -126,7 +131,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 			if (mMode == MODE_NAPPING) {
 				Log.d(TAG, "Playlist finished.");
 				showMessage(getText(R.string.seen_all));
-				initGroupingMenu();				
+				mMenuPlayNext.setVisible(false);
+				mMenuFinishNapping.setVisible(true);
 			} else {
 				// do nothing, we are already grouping
 			}
@@ -174,6 +180,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		
 		// assign all buttons for later
 		mMenuPlayNext 		= menu.findItem(R.id.menu_play_next);
+		mMenuFinishNapping	= menu.findItem(R.id.menu_finish_napping);
 	    mMenuCreateGroup 	= menu.findItem(R.id.menu_create_group);
 	    mMenuMoveMode		= menu.findItem(R.id.menu_move_mode);
 		mMenuEditKeywords 	= menu.findItem(R.id.menu_edit_keywords);
@@ -181,8 +188,9 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		mMenuDeleteGroup	= menu.findItem(R.id.menu_delete_group);
 	    mMenuFinish 		= menu.findItem(R.id.menu_finish);
 	    
-	    // default visibilities for the napping taskitself
+	    // default visibilities for the napping task itself
 	    mMenuPlayNext.setVisible(true);
+	    mMenuFinishNapping.setVisible(false);
 	    mMenuCreateGroup.setVisible(false);
 	    mMenuMoveMode.setVisible(false);
 	    mMenuEditKeywords.setVisible(false);
@@ -204,9 +212,14 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 				// play then next video from the playlist
 				playNextVideo();
 				return true;
-			case R.id.menu_finish:
-				// finish the experiment
-				confirmFinish();
+			case R.id.menu_finish_napping:
+				if (mSharedPreferences.getBoolean(PreferencesActivity.ENABLE_GROUPING, true)) {
+					// finish napping, start grouping
+					initGroupingMenu();					
+				} else {
+					// finish experiment, no grouping
+					confirmAndFinish();
+				}
 				return true;
 			case R.id.menu_create_group:
 				// create a new group for videos
@@ -222,6 +235,10 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 			case R.id.menu_edit_keywords:
 				// show the keyword editor to the user
 				showKeywordEditor();
+			case R.id.menu_finish:
+				// finish the experiment
+				confirmAndFinish();
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -252,7 +269,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	/**
 	 * Shows a dialog for the user to confirm whether they want to finish
 	 */
-	private void confirmFinish() {
+	private void confirmAndFinish() {
 		new AlertDialog.Builder(this)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setTitle(getText(R.string.dialog_finish_header))
@@ -261,7 +278,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
         	{
         		@Override
     			public void onClick(DialogInterface dialog, int which) {
-        			setResult(Activity.RESULT_CANCELED);
+        			setResult(Activity.RESULT_OK);
     				finishExperiment();
     			}
 
@@ -276,6 +293,7 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	private void finishExperiment() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
 		String date = dateFormat.format(new Date());
+		ArrayList<File> files = new ArrayList<File>();
 		
 		// create a screenshot
 		View activity = findViewById(R.id.layout_napping);
@@ -283,25 +301,26 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		Bitmap bmp = Bitmap.createBitmap(activity.getDrawingCache());
 		activity.setDrawingCacheEnabled(false);
 		File screenshotFile = IOUtil.saveScreenshot(bmp, mName, date);
+		files.add(screenshotFile);
 		
 		// export positions from the current view
 		File positionsFile = IOUtil.exportPositions(mVideoButtons, mName, date);
+		files.add(positionsFile);
 		
 		// export configuration
 		File configurationFile = IOUtil.saveConfiguration(mName, date);
+		files.add(configurationFile);
 		
-		// export groups and keywords
-		File groupFile = IOUtil.exportGroups(mVideoGroups, mName, date);
+		// export groups and keywords (only if we grouped at all)
+		if (mSharedPreferences.getBoolean(PreferencesActivity.ENABLE_GROUPING, true)) {
+			File groupFile = IOUtil.exportGroups(mVideoGroups, mName, date);			
+			files.add(groupFile);
+		}
 		
 		// send the image per mail
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		if (prefs.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
-			ArrayList<File> files = new ArrayList<File>();
-			files.add(configurationFile);
-			files.add(screenshotFile);
-			files.add(positionsFile);
-			files.add(groupFile);
-			IOUtil.sendFilePerMail(files, mName, this);				
+		if (mSharedPreferences.getBoolean(PreferencesActivity.SEND_EMAIL, true)) {
+			String recipient = mSharedPreferences.getString(PreferencesActivity.SEND_EMAIL_ADDRESS, "entertainment.computing@gmail.com");
+			IOUtil.sendFilePerMail(recipient, files, mName, this);				
 		}
 		
 		setResult(Activity.RESULT_OK);
@@ -346,8 +365,11 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	private void initGroupingMenu() {
 		Log.d(TAG, "initGroupingMenu called");
 		
+		// disable movement
+		enableGroupingMode();
+		
 		// set new visibilities for grouping mode
-		mMenuPlayNext.setVisible(false);
+		mMenuFinishNapping.setVisible(false);
 		mMenuCreateGroup.setVisible(true);
 		
 	    // Action Bar setup
@@ -438,8 +460,10 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		mMenuSaveGroup.setEnabled(true);
 		mMenuDeleteGroup.setEnabled(true);
 		mMenuEditKeywords.setEnabled(true);
-		mMenuMoveMode.setVisible(true);
-		mMenuMoveMode.setTitle(getText(R.string.menu_move_mode));
+		if (mSharedPreferences.getBoolean(PreferencesActivity.ENABLE_MOVEMENT, false)) {
+			mMenuMoveMode.setVisible(true);
+			mMenuMoveMode.setTitle(getText(R.string.menu_move_mode));			
+		}
 		mMode = MODE_GROUPING;
 	}
 	
@@ -455,8 +479,10 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		mMenuSaveGroup.setEnabled(false);
 		mMenuDeleteGroup.setEnabled(false);
 		mMenuEditKeywords.setEnabled(false);
-		mMenuMoveMode.setVisible(true);
-		mMenuMoveMode.setTitle(getText(R.string.menu_group_mode));		
+		if (mSharedPreferences.getBoolean(PreferencesActivity.ENABLE_MOVEMENT, false)) {
+			mMenuMoveMode.setVisible(true);
+			mMenuMoveMode.setTitle(getText(R.string.menu_group_mode));
+		}
 		mMode = MODE_MOVING;
 	}
 	
@@ -470,12 +496,14 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 
 	@Override
 	public void onSelectVideoRequest(VideoButtonView btn) {
-		if (btn.isSelected()) {
-			mCurrentVideoGroup.removeVideo(btn);
-			btn.showAsDeselected();
-		} else {
-			mCurrentVideoGroup.addVideo(btn);
-			btn.showAsSelected(mCurrentVideoGroup.getColor());
+		if (mCurrentVideoGroup != null) {
+			if (btn.isSelected()) {
+				mCurrentVideoGroup.removeVideo(btn);
+				btn.showAsDeselected();
+			} else {
+				mCurrentVideoGroup.addVideo(btn);
+				btn.showAsSelected(mCurrentVideoGroup.getColor());
+			}	
 		}
 	}
 

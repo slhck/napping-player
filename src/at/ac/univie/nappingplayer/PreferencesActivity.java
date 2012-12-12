@@ -14,14 +14,20 @@ public class PreferencesActivity extends PreferenceActivity implements
 	public static final String LIST_SCALE 			= "list_scale";
 	public static final String VIDEO_START_DELAY 	= "video_start_delay";
 	public static final String SEND_EMAIL 			= "send_email";
+	public static final String SEND_EMAIL_ADDRESS	= "send_email_address";
+	public static final String ENABLE_GROUPING		= "enable_grouping";
+	public static final String ENABLE_MOVEMENT 		= "enable_movement";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 		
-		EditTextPreference pref = (EditTextPreference)findPreference(VIDEO_START_DELAY);
-		pref.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+		EditTextPreference videoStartPref = (EditTextPreference)findPreference(VIDEO_START_DELAY);
+		videoStartPref.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+		
+		EditTextPreference emailAddressPref = (EditTextPreference)findPreference(SEND_EMAIL_ADDRESS);
+		emailAddressPref.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 	}
 
 	@Override
@@ -32,6 +38,9 @@ public class PreferencesActivity extends PreferenceActivity implements
 		} else if (key.equals(VIDEO_START_DELAY)) {
 			EditTextPreference videoStartPref = (EditTextPreference) findPreference(VIDEO_START_DELAY);
 			videoStartPref.setSummary(videoStartPref.getText());
+		} else if (key.equals(SEND_EMAIL_ADDRESS)) {
+			EditTextPreference emailAddressPref = (EditTextPreference) findPreference(SEND_EMAIL_ADDRESS);
+			emailAddressPref.setSummary(emailAddressPref.getText());
 		}
 	}
 

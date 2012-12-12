@@ -17,6 +17,14 @@
         android:icon="@android:drawable/ic_menu_compass"
         android:title="@string/menu_move_mode"/>
 	
+    <item
+        android:id="@+id/menu_finish_napping"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/menu_finish_napping"/>
+	
+    
 	<item
         android:id="@+id/menu_edit_keywords"
         android:orderInCategory="100"
