@@ -23,8 +23,10 @@ arbitrary. The X and Y coordinates represent attributes, so we have information 
 - Repeat a video any time
 - Export coordinates of video buttons
 - Export screenshot of the nap
+- Group videos and export groups
 - Send result e-mail after experiment
 - Inspect experiment data on the device itself
+- Fully internationalized for English and German (more to come)
 
 ## System requirements
 
@@ -77,7 +79,10 @@ This is simple. Once the videos are on the device, start the Napping Player.
 6. Repeat steps 4 and 5 until the "Finish" button appears.
 7. Click "Finish"
 8. If you're prompted to send an e-mail, simply click "Send" in the upper navigation bar.
-9. You're done. Hand the tablet back to the instructor.
+9. If you are prompted to group the videos, create a new group by pressing the button in the menu.
+10. Add videos to a group by clicking them.
+11. Create as many new groups as you like, and once done, click "Finish".
+12. You're done. Hand the tablet back.
 
 You will find the results on the SD card under `NappingLogs`. You can also click the Preferences button in the upper right of the start screen and launch the data explorer to see what files already exist — and delete them if necessary.
 
