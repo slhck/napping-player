@@ -316,6 +316,9 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		if (mSharedPreferences.getBoolean(PreferencesActivity.ENABLE_GROUPING, true)) {
 			File groupFile = IOUtil.exportGroups(mVideoGroups, mName, date);			
 			files.add(groupFile);
+			
+			File keywordsFile = IOUtil.exportKeywords(mVideoGroups, mName, date);
+			files.add(keywordsFile);
 		}
 		
 		// send the image per mail

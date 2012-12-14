@@ -96,7 +96,7 @@ public abstract class IOUtil {
 	public static File exportPositions(ArrayList<VideoButtonView> buttons,
 			String name, String date) {
 		Log.d(TAG, "Logging results for user " + name + " at " + date);
-		String logName = date + "-" + name + ".csv";
+		String logName = date + "-" + name + "-videos.csv";
 		File logFile = new File(Configuration.getLogFolder(), logName);
 		FileWriter fw = null;
 		BufferedWriter bw = null;
@@ -105,14 +105,14 @@ public abstract class IOUtil {
 			logFile.createNewFile();
 			fw = new FileWriter(logFile);
 			bw = new BufferedWriter(fw);
+			
+			bw.write("video_id" + SEP + "file" + SEP + "x" + SEP + "y");
+			bw.newLine();
+			
 			for (VideoButtonView button : buttons) {
-				Log.d(TAG,
-						"Writing button " + button.getLabel()
-								+ " with position " + button.getTop() + "/"
-								+ button.getLeft());
+				Log.d(TAG, "Writing button " + button.getLabel() + " with position " + button.getTop() + "/" + button.getLeft());
 				String videoName = VideoPlaylist.getVideo(button.getVideoId()).toString();
-				String line = videoName + SEP + button.getLeft() + SEP
-						+ button.getTop();
+				String line = "" + button.getVideoId() + SEP + videoName + SEP + button.getLeft() + SEP + button.getTop();
 				bw.write(line);
 				bw.newLine();
 			}
@@ -125,9 +125,7 @@ public abstract class IOUtil {
 					bw.flush();
 					bw.close();
 				} catch (IOException e) {
-					Log.e(TAG,
-							"Couldn't close file / buffered writer"
-									+ e.toString());
+					Log.e(TAG, "Couldn't close file / buffered writer" + e.toString());
 					e.printStackTrace();
 				}
 			}
@@ -152,26 +150,17 @@ public abstract class IOUtil {
 			logFile.createNewFile();
 			fw = new FileWriter(logFile);
 			bw = new BufferedWriter(fw);
+			
+			bw.write("group_id" + SEP + "video_id");
+			bw.newLine();
+			
 			for (VideoGroup group : groups) {
 				Log.d(TAG, "Writing group videos " + group.toString());
-				String groupName = group.toString(); 
-				String line = groupName + SEP + "videos";
 				for (VideoButtonView v : group.getVideoButtons()) {
-					String videoName = VideoPlaylist.getVideo(v.getVideoId()).toString();
-					line += SEP + videoName;
+					String line = group.getId() + SEP + v.getVideoId();
+					bw.write(line);
+					bw.newLine();
 				}
-				bw.write(line);
-				bw.newLine();
-			}
-			for (VideoGroup group : groups) {
-				Log.d(TAG, "Writing group keywords" + group.toString());
-				String groupName = group.toString(); 
-				String line = groupName + SEP + "keywords";
-				for (String keyword : group.getKeywords()) {
-					line += SEP + keyword;
-				}
-				bw.write(line);
-				bw.newLine();
 			}
 		} catch (IOException e) {
 			Log.e(TAG, "Couldn't write log file: " + e.toString());
@@ -191,6 +180,57 @@ public abstract class IOUtil {
 		}
 		return logFile;
 	}
+	
+
+	/**
+	 * Saves the group keywords to a file on the SD card
+	 *
+	 * @return A reference to the saved file
+	 */
+	public static File exportKeywords(ArrayList<VideoGroup> groups, String name, String date) {
+		// TODO: 
+		Log.d(TAG, "Logging results for user " + name + " at " + date);
+		String logName = date + "-" + name + "-keywords.csv";
+		File logFile = new File(Configuration.getLogFolder(), logName);
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		Log.d(TAG, "Trying to write to file " + logFile);
+		try {
+			logFile.createNewFile();
+			fw = new FileWriter(logFile);
+			bw = new BufferedWriter(fw);
+			
+			bw.write("group_id" + SEP + "keyword");
+			bw.newLine();
+			
+			for (VideoGroup group : groups) {
+				Log.d(TAG, "Writing group keywords" + group.toString());
+				for (String keyword : group.getKeywords()) {
+					String line = group.getId() + SEP + keyword;
+					bw.write(line);
+					bw.newLine();
+				}
+			}
+		} catch (IOException e) {
+			Log.e(TAG, "Couldn't write log file: " + e.toString());
+			e.printStackTrace();
+		} finally {
+			if ((fw != null) && (bw != null)) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch (IOException e) {
+					Log.e(TAG,
+							"Couldn't close file / buffered writer"
+									+ e.toString());
+					e.printStackTrace();
+				}
+			}
+		}
+		return logFile;
+	}
+	
+	
 	
 	/**
 	 * Saves the screenshot from a bitmap to a file on the SD card

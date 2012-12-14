@@ -7,11 +7,7 @@ This is a video player for Android tablets that allows to conduct "Napping" expe
 
 From Nestrud, Michael A., and Harry T. Lawless. "Recovery of subsampled dimensions and configurations derived from napping data by MFA and MDS." Attention, Perception, & Psychophysics 73.4 (2011): 1266-1278:
 
-> Projective mapping is a relatively new psychological measurement method that was introduced in the mid-1990s […]. It has also been coined “napping” (Pagès, 2005), owing to the French term for tablecloth. The method involves having
-participants evaluate and physically place stimuli (usually food items) on a large sheet of paper (approximately 60 cm ×
-60 cm). Stimuli that are similar are placed close together, and stimuli that are dissimilar are placed farther apart. The data
-collected are the X,Y coordinates of the items with the origin typically being the bottom left of the paper, although it is
-arbitrary. The X and Y coordinates represent attributes, so we have information on two attributes for each stimulus.
+> Projective mapping is a relatively new psychological measurement method that was introduced in the mid-1990s […]. It has also been coined “napping” (Pagès, 2005), owing to the French term for tablecloth. The method involves having participants evaluate and physically place stimuli (usually food items) on a large sheet of paper (approximately 60 cm × 60 cm). Stimuli that are similar are placed close together, and stimuli that are dissimilar are placed farther apart. The data collected are the X,Y coordinates of the items with the origin typically being the bottom left of the paper, although it is arbitrary. The X and Y coordinates represent attributes, so we have information on two attributes for each stimulus.
 
 
 
@@ -84,7 +80,63 @@ This is simple. Once the videos are on the device, start the Napping Player.
 11. Create as many new groups as you like, and once done, click "Finish".
 12. You're done. Hand the tablet back.
 
+## Data output
+
 You will find the results on the SD card under `NappingLogs`. You can also click the Preferences button in the upper right of the start screen and launch the data explorer to see what files already exist — and delete them if necessary.
+
+For every session, the app will store the following files:
+
+### Video Positions
+
+The file `<date>-<user>-videos.csv` contains all the video IDs, their path (full filename) and the coordinates of the buttons. Example:
+
+      video_id                            file   x   y
+    1        0 /mnt/sdcard/NappingMovies/1.mp4 276 169
+    2        1 /mnt/sdcard/NappingMovies/2.mp4 913 230
+
+### Video Groups and Keywords
+
+The file `<date>-<user>-groups.csv` contains the groups and their associated videos. Example:
+
+      group_id video_id
+    1        0        0
+    2        0        1
+    3        1        0
+    4        2        1
+
+The file `<date>-<user>-keywords.csv` contains the groups and their associated keywords. Example:
+
+      group_id keyword
+    1        0     foo
+    2        0     baz
+    3        1     bar
+    4        2     yak
+
+We can easily merge the groups and the list of videos, and then later the keywords, e.g. in R with:
+
+    videos_groups = merge(videos, groups)
+    all = merge(videos_groups, keywords)
+
+Then, `all` contains:
+
+      group_id video_id                            file   x   y keyword
+    1        0        0 /mnt/sdcard/NappingMovies/1.mp4 276 169     foo
+    2        0        0 /mnt/sdcard/NappingMovies/1.mp4 276 169     baz
+    3        0        1 /mnt/sdcard/NappingMovies/2.mp4 913 230     foo
+    4        0        1 /mnt/sdcard/NappingMovies/2.mp4 913 230     baz
+    5        1        0 /mnt/sdcard/NappingMovies/1.mp4 276 169     bar
+    6        2        1 /mnt/sdcard/NappingMovies/2.mp4 913 230     yak
+
+
+### System Config – `<date>-<username>-config.csv`
+
+This file stores basic system information that might be helpful in debugging certain users or relating outcome to devices. At the moment we store the username, the screen width and height as well as the Android version:
+
+
+    name,           test2
+    screen-width,   1280
+    screen-height,  800
+    release,        3.1
 
 ## Development and issues
 
