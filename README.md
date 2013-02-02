@@ -42,14 +42,6 @@ This app is under development. Things might break. Some stuff might be hard code
 - If you find any issues or have suggestions for features, please post them on the [GitHub issue tracker](https://github.com/slhck/napping-player/issues). Please mention your Android version and hardware, as well as specific steps to reproduce a bug.
 - If you want to help develop this player, please contact me at `slhck` at `me.com` or simply submit pull requests.
 
-## Literature
-
-- Risvik, Einar, Jean A. McEwan, and Marit Rødbotten. "Evaluation of sensory profiling and projective mapping data." Food quality and preference 8.1 (1997): 63-71.
-- Pagès, Jérôme. "Collection and analysis of perceived product inter-distances using multiple factor analysis: Application to the study of 10 white wines from the Loire Valley." Food quality and preference 16.7 (2005): 642-649.
-- Perrin, Lucie, et al. "Comparison of three sensory methods for use with the Napping® procedure: Case of ten wines from Loire valley." Food Quality and Preference 19.1 (2008): 1-11.
-- Nestrud, Michael A., and Harry T. Lawless. "Perceptual mapping of citrus juices using projective mapping and profiling data from culinary professionals and consumers." Food quality and preference 19.4 (2008): 431-438.
-- Nestrud, Michael A., and Harry T. Lawless. "Recovery of subsampled dimensions and configurations derived from napping data by MFA and MDS." Attention, Perception, & Psychophysics 73.4 (2011): 1266-1278.
-
 ## License
 
 This software is released under the GNU General Public License version 3. Copyright (C) 2013 Werner Robitza. I'm not a lawyer. Just be nice.
@@ -57,4 +49,5 @@ This software is released under the GNU General Public License version 3. Copyri
 Written for the University of Vienna.
 
 ![](http://www.dropbox.com/u/84665/quassumm/univie.gif)
+
 
