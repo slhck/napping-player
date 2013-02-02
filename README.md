@@ -50,6 +50,11 @@ This app is under development. Things might break. Some stuff might be hard code
 - Nestrud, Michael A., and Harry T. Lawless. "Perceptual mapping of citrus juices using projective mapping and profiling data from culinary professionals and consumers." Food quality and preference 19.4 (2008): 431-438.
 - Nestrud, Michael A., and Harry T. Lawless. "Recovery of subsampled dimensions and configurations derived from napping data by MFA and MDS." Attention, Perception, & Psychophysics 73.4 (2011): 1266-1278.
 
+## License
 
+This software is released under the GNU General Public License version 3. Copyright (C) 2013 Werner Robitza. I'm not a lawyer. Just be nice.
 
+Written for the University of Vienna.
+
+![](http://www.dropbox.com/u/84665/quassumm/univie.gif)
 
