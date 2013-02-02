@@ -17,12 +17,12 @@ The Wiki also contains extensive information on data analysis.
 
 ## Features
 
-- Tablet-ready landscape view of the "nap"
+- Tablet-ready landscape view of the "nappe"
 - Sequential playing of video material loaded on the device
 - Drag video buttons around after seeing them
 - Repeat a video any time
 - Export coordinates of video buttons
-- Export screenshot of the nap
+- Export screenshot of the nappe
 - Group videos and export groups
 - Send result e-mail after experiment
 - Inspect experiment data on the device itself
