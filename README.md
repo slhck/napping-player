@@ -1,7 +1,7 @@
 napping-player
 ==============
 
-![](http://www.dropbox.com/u/84665/quassumm/nplayer.png)
+![](https://dl.dropbox.com/u/84665/quassumm/nplayer.png)
 
 This is a video player for Android tablets that allows to conduct "Napping" experiments. What are napping experiments?
 
@@ -48,6 +48,6 @@ This software is released under the GNU General Public License version 3. Copyri
 
 Written for the University of Vienna.
 
-![](http://www.dropbox.com/u/84665/quassumm/univie.gif)
+![](https://dl.dropbox.com/u/84665/quassumm/univie.gif)
 
 
