@@ -14,6 +14,7 @@ From Nestrud, Michael A., and Harry T. Lawless. "Recovery of subsampled dimensio
 Please refer to [the NappingPlayer Wiki](https://github.com/slhck/napping-player/wiki) for complete instructions on installing, configuring and using the player.
 The Wiki also contains extensive information on data analysis.
 
+Quick install? Set your device to allow unsigned apps and [download the APK here](https://dl.dropboxusercontent.com/u/84665/quassumm/napping-player.apk).
 
 ## Features
 
