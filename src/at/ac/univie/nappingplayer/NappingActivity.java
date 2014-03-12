@@ -39,6 +39,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.SpinnerAdapter;
@@ -97,7 +98,9 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_napping);
-		
+
+
+
 		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		
 		// Layout options
@@ -136,25 +139,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		Log.d(TAG, "onResume called");
 		// if we haven't stopped yet just get the current video ID 
 		// (could be 0 to start)
-		if (VideoPlaylist.getState() != VideoPlaylist.STATE_FINISHED) {
-			if (VideoPlaylist.getState() != VideoPlaylist.STATE_INITIALIZED) {
-				showMessage(getText(R.string.drag_around));				
-			} else {
-				showMessage(getText(R.string.click_play_to_start));
-			}
-			mCurrentVideoId = VideoPlaylist.getCurrentVideoId();
-			Log.d(TAG, "Setting current video ID to " + mCurrentVideoId);
-		} else {
-			// playlist has finished, we disable the "play next" button 
-			// and move on to grouping
-			if (mMode == MODE_NAPPING) {
-				Log.d(TAG, "Playlist finished.");
-				showMessage(getText(R.string.seen_all));
-				mMenuPlayNext.setVisible(false);
-				mMenuFinishNapping.setVisible(true);
-			} else {
-				// do nothing, we are already grouping
-			}
+        if (VideoPlaylist.getState() != VideoPlaylist.STATE_FINISHED) {
+            addAllButtons();
 		}
 	}
 	
@@ -187,7 +173,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.activity_napping, menu);
-	    return true;
+
+        return true;
 	}
 
 	/**
@@ -196,26 +183,26 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		Log.d(TAG, "onPrepareOptionsMenu called");
-		
-		// assign all buttons for later
-		mMenuPlayNext 		= menu.findItem(R.id.menu_play_next);
-		mMenuFinishNapping	= menu.findItem(R.id.menu_finish_napping);
-	    mMenuCreateGroup 	= menu.findItem(R.id.menu_create_group);
-	    mMenuMoveMode		= menu.findItem(R.id.menu_move_mode);
-		mMenuEditKeywords 	= menu.findItem(R.id.menu_edit_keywords);
-		mMenuSaveGroup		= menu.findItem(R.id.menu_save_group);
-		mMenuDeleteGroup	= menu.findItem(R.id.menu_delete_group);
-	    mMenuFinish 		= menu.findItem(R.id.menu_finish);
-	    
-	    // default visibilities for the napping task itself
-	    mMenuPlayNext.setVisible(true);
-	    mMenuFinishNapping.setVisible(false);
-	    mMenuCreateGroup.setVisible(false);
-	    mMenuMoveMode.setVisible(false);
-	    mMenuEditKeywords.setVisible(false);
-	    mMenuSaveGroup.setVisible(false);
-	    mMenuDeleteGroup.setVisible(false);
-	    mMenuFinish.setVisible(false);
+
+        // assign all buttons for later
+        mMenuPlayNext 		= menu.findItem(R.id.menu_play_next);
+        mMenuFinishNapping	= menu.findItem(R.id.menu_finish_napping);
+        mMenuCreateGroup 	= menu.findItem(R.id.menu_create_group);
+        mMenuMoveMode		= menu.findItem(R.id.menu_move_mode);
+        mMenuEditKeywords 	= menu.findItem(R.id.menu_edit_keywords);
+        mMenuSaveGroup		= menu.findItem(R.id.menu_save_group);
+        mMenuDeleteGroup	= menu.findItem(R.id.menu_delete_group);
+        mMenuFinish 		= menu.findItem(R.id.menu_finish);
+
+        // default visibilities for the napping task itself
+        mMenuPlayNext.setVisible(false);
+        mMenuFinishNapping.setVisible(true);
+        mMenuCreateGroup.setVisible(false);
+        mMenuMoveMode.setVisible(false);
+        mMenuEditKeywords.setVisible(false);
+        mMenuSaveGroup.setVisible(false);
+        mMenuDeleteGroup.setVisible(false);
+        mMenuFinish.setVisible(false);
 	    
 	    super.onPrepareOptionsMenu(menu);
 	    return true;
@@ -229,7 +216,8 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		switch(item.getItemId()) {
 			case R.id.menu_play_next:
 				// play then next video from the playlist
-				playNextVideo();
+				// playNextVideo();
+                addAllButtons();
 				return true;
 			case R.id.menu_finish_napping:
 				if (mSharedPreferences.getBoolean(PreferencesActivity.ENABLE_GROUPING, true)) {
@@ -357,7 +345,30 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		Log.d(TAG, "Adding button for video " + videoId);
 		VideoButtonView button = new VideoButtonView(this, videoId);
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout_napping);
-		layout.addView(button);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        // params.setMargins(10, 10, 10, 10);
+
+        int buttonsPerRow = 10;
+        params.setMargins(
+                // left offset + per column offset
+                10 + (videoId % buttonsPerRow) * 100,
+                // from top offset
+                10 + (videoId / buttonsPerRow) * 70,
+                // right and bottom margin
+                0, 0
+        );
+
+        // align to right of previous button
+        //if (videoId != 0) {
+        //    VideoButtonView previousButton = mVideoButtons.get(videoId - 1);
+        //    params.addRule(RelativeLayout.RIGHT_OF, previousButton.getId());
+        //}
+
+        layout.addView(button, params);
 		mVideoButtons.add(button);
 	}
 
@@ -370,6 +381,21 @@ public class NappingActivity extends Activity implements StartVideoListener, Sel
 		Log.d(TAG, "User pressed button. Playing next video with id " + mCurrentVideoId);
 		startActivityForResult(showVideo, VIDEO_NEXT_REQUEST);
 	}
+
+    private void addAllButtons() {
+        for (int i = 0; i < VideoPlaylist.getNumberOfFiles(); i++) {
+            addButtonAndGoToNext();
+        }
+    }
+
+    private void addButtonAndGoToNext() {
+        mCurrentVideoId = VideoPlaylist.getCurrentVideoId();
+        Log.d(TAG, "Adding button for ID " + mCurrentVideoId);
+        addButtonForVideo(mCurrentVideoId);
+        if (VideoPlaylist.getState() != VideoPlaylist.STATE_FINISHED) {
+            VideoPlaylist.incrementToNext();
+        }
+    }
 	
 	/**
 	 * Play a single video from the playlist

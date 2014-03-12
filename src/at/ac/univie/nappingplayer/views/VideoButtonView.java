@@ -50,14 +50,14 @@ public class VideoButtonView extends android.widget.Button {
 
 	public VideoButtonView(Context context, int videoId) {
 		super(context);
+        this.setId(videoId + 1);
 		this.setVideoId(videoId);
 		this.setLabel(" " + (getVideoId() + 1) + " ");
 		super.setBackgroundColor(Color.parseColor(COLOR_NEUTRAL));
 		super.setText(getLabel());
 		super.setTextColor(Color.parseColor("#000000"));
-		
-		
-		setLayout();
+        // disable for now since it's set in main activity
+		//setLayout();
 		addClickListeners();
 		
 		this.mMode = MODE_MOVE;
@@ -73,7 +73,7 @@ public class VideoButtonView extends android.widget.Button {
 		// TODO: More intelligent placement?
 		super.setLayoutParams(p);
 	}
-	
+
 	private void addClickListeners() {
 		this.setOnTouchListener(new View.OnTouchListener() {
 			long touchDownTime;
@@ -111,6 +111,7 @@ public class VideoButtonView extends android.widget.Button {
 							int top  = (int) event.getRawY() - (v.getHeight());
 							marginParams.setMargins(left, top - STATUS_BAR_HEIGHT, 0, 0);
 							RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
+                            // ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(marginParams);
 							v.setLayoutParams(layoutParams);
 						}
 					}
@@ -182,5 +183,5 @@ public class VideoButtonView extends android.widget.Button {
 	public void setLabel(String mLabel) {
 		this.mLabel = mLabel;
 	}
-		
+
 }

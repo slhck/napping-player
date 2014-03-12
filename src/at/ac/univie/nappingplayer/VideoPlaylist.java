@@ -57,7 +57,11 @@ public abstract class VideoPlaylist {
 		// TODO: Sort by name, but add other options later
 		Collections.sort(sFiles);
 	}
-	
+
+    public static int getNumberOfFiles() {
+        return sFiles.size();
+    }
+
 	/**
 	 * Returns a file reference for the given ID, in the order the files are read (whatever that is)
 	 */
