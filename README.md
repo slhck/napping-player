@@ -1,6 +1,8 @@
 napping-player
 ==============
 
+[![DOI](https://zenodo.org/badge/9330/slhck/napping-player.svg)](http://dx.doi.org/10.5281/zenodo.14283)
+
 ![](https://dl.dropbox.com/u/84665/quassumm/nplayer.png)
 
 This is a video player for Android tablets that allows to conduct "Napping" experiments. What are napping experiments?
